@@ -31,5 +31,41 @@
 <input class="instruction" type="checkbox" name="instruction" value="Take Toradol 10 mg every 4-6 hours. You can take up to 40 mg in 24 hours. Take with food. Do not take with Motrin. ">Toradol 10<br>
 
 </form>
+        <div id="instruction-label" class="instruction-label" aria-live="polite" role="status"></div>
+
+        <script>
+            (function(){
+                // helper to decode HTML entities in the value strings
+                function decodeHtml(html){
+                    const txt = document.createElement('textarea');
+                    txt.innerHTML = html;
+                    return txt.value;
+                }
+
+                const label = document.getElementById('instruction-label');
+                const checkboxes = Array.from(document.querySelectorAll('input.instruction[type="checkbox"]'));
+
+                function updateLabel(){
+                    const checked = checkboxes.filter(c => c.checked);
+                    if(checked.length === 0){
+                        label.textContent = '';
+                        return;
+                    }
+
+                    // If only one selected, show it; if many, show a list
+                    if(checked.length === 1){
+                        label.innerHTML = decodeHtml(checked[0].value);
+                    } else {
+                        label.innerHTML = checked.map(c => '<div>' + decodeHtml(c.value) + '</div>').join('');
+                    }
+                }
+
+                // attach listeners
+                checkboxes.forEach(cb => cb.addEventListener('change', updateLabel));
+
+                // initialize on load in case some are pre-checked
+                updateLabel();
+            })();
+        </script>
 </body>
 </html>
