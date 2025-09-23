@@ -11,6 +11,7 @@
     </nav>
     <div class="actions">
         <button id="about-btn" type="button" onclick="window.location.href='about.html'" aria-label="About page">About this site</button>
+        <button id="copy-btn" type="button" onclick="copyInstructionLabel()" aria-label="Copy selected instructions">Copy</button>
     </div>
     <h1>Welcome</h1>
 
@@ -60,11 +61,54 @@
                     }
                 }
 
-                // attach listeners
-                checkboxes.forEach(cb => cb.addEventListener('change', updateLabel));
+                        // attach listeners
+                        checkboxes.forEach(cb => cb.addEventListener('change', updateLabel));
 
-                // initialize on load in case some are pre-checked
-                updateLabel();
+                        // initialize on load in case some are pre-checked
+                        updateLabel();
+
+                        // expose copy function to global scope for the button onclick
+                        window.copyInstructionLabel = function(){
+                            const text = label.innerText.trim();
+                            if(!text){
+                                // visual feedback if nothing to copy
+                                const b = document.getElementById('copy-btn');
+                                const prev = b.textContent;
+                                b.textContent = 'Nothing to copy';
+                                setTimeout(()=> b.textContent = prev, 1200);
+                                return;
+                            }
+
+                            // use Clipboard API when available
+                            if(navigator.clipboard && navigator.clipboard.writeText){
+                                navigator.clipboard.writeText(text).then(()=>{
+                                    const b = document.getElementById('copy-btn');
+                                    const prev = b.textContent;
+                                    b.textContent = 'Copied!';
+                                    setTimeout(()=> b.textContent = prev, 1400);
+                                }).catch(()=>{
+                                    // fallback to textarea method
+                                    const ta = document.createElement('textarea');
+                                    ta.value = text;
+                                    document.body.appendChild(ta);
+                                    ta.select();
+                                    try{ document.execCommand('copy'); }
+                                    finally{ document.body.removeChild(ta); }
+                                });
+                            } else {
+                                // fallback for older browsers
+                                const ta = document.createElement('textarea');
+                                ta.value = text;
+                                document.body.appendChild(ta);
+                                ta.select();
+                                try{ document.execCommand('copy');
+                                    const b = document.getElementById('copy-btn');
+                                    const prev = b.textContent;
+                                    b.textContent = 'Copied!';
+                                    setTimeout(()=> b.textContent = prev, 1400);
+                                } finally{ document.body.removeChild(ta); }
+                            }
+                        };
             })();
         </script>
 </body>
