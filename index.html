@@ -11,6 +11,7 @@
     </nav>
     <div class="actions">
         <button id="about-btn" type="button" onclick="window.location.href='about.html'" aria-label="About page">About this site</button>
+        <button id="edit-btn" type="button" onclick="toggleEdit()" aria-label="Edit selected instruction">Edit</button>
         <button id="copy-btn" type="button" onclick="copyInstructionLabel()" aria-label="Copy selected instructions">Copy</button>
     </div>
     <h1>Welcome</h1>
@@ -43,10 +44,32 @@
                     return txt.value;
                 }
 
-                const label = document.getElementById('instruction-label');
+                        const label = document.getElementById('instruction-label');
                 const checkboxes = Array.from(document.querySelectorAll('input.instruction[type="checkbox"]'));
+                        const editBtn = document.getElementById('edit-btn');
+
+                        // editing flag: when true, updateLabel will not overwrite the label
+                        let editing = false;
+
+                        // toggle edit mode: when editing is true the label becomes editable and checkbox updates are paused
+                        window.toggleEdit = function(){
+                            editing = !editing;
+                            label.contentEditable = editing;
+                            if(editing){
+                                editBtn.textContent = 'Save';
+                                // put caret at end
+                                label.focus();
+                                document.execCommand('selectAll', false, null);
+                                const sel = window.getSelection();
+                                if(sel && sel.rangeCount) sel.collapseToEnd();
+                            } else {
+                                editBtn.textContent = 'Edit';
+                            }
+                        };
 
                 function updateLabel(){
+                    // don't overwrite the label while user is editing it
+                    if(editing) return;
                     const checked = checkboxes.filter(c => c.checked);
                     if(checked.length === 0){
                         label.textContent = '';
