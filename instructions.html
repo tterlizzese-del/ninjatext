@@ -1,0 +1,163 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructions</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="topnav">
+        <div class="nav-inner">
+            <a class="nav-brand" href="home.html">NinjaText</a>
+            <nav class="nav-links">
+                <a href="instructions.html">Instructions</a>
+                <a href="home.html">Home</a>
+            </nav>
+        </div>
+    </header>
+    <div class="actions">
+        <button id="copy-btn" type="button" onclick="copyInstructionLabel()" aria-label="Copy selected instructions">Copy</button>
+    </div>
+    <h1>Discharge Instructions</h1>
+
+    <strong>OTC Pain meds</strong><br>
+<form action="">
+<input class="instruction" type="checkbox" name="instruction" value="&lt;b&gt;-For mild pain:&lt;/b&gt;">For mild pain<br>
+
+<input class="instruction" type="checkbox" name="instruction" value="Take Tylenol (acetaminophen) 1-2 pills (500-1000 mg) every 6-8 hours. Take no more than 8 pills (4000 mg) in 24 hours ">Tylenol 500/1000<br>
+
+<input class="instruction" type="checkbox" name="instruction" value="Take Motrin (ibuprofen) 400 mg (two 200 mg tablets) or Tylenol (acetaminophen) 500 mg every 6-8 hours. ">Motrin 400 or Tylenol 500<br>
+
+<input class="instruction" type="checkbox" name="instruction" value="&lt;b&gt;-For severe pain:&lt;/b&gt;">For severe pain<br>
+
+<input class="instruction" type="checkbox" name="instruction" value="Take Motrin (ibuprofen) 800 mg (four 200 mg tablets) and Tylenol (acetaminophen) 1000 mg (two 500 mg tablets) every 6-8 hours. You can safely take Motrin and Tylenol together if the pain is severe. ">Motrin 800/ Tylenol 1000<br>
+
+<input class="instruction" type="checkbox" name="instruction" value="Take Aleve (naproxen) 500 mg (two 250 mg tablets) every 12 hours. Take with food and do not take with Motrin (ibuprofen). ">Aleve 500<br>
+
+<input class="instruction" type="checkbox" name="instruction" value="Take Toradol 10 mg every 4-6 hours. You can take up to 40 mg in 24 hours. Take with food. Do not take with Motrin. ">Toradol 10<br>
+
+</form>
+    <span style="font-weight: 700;">Rx Pain Meds</span><br>
+<form action="">
+
+<input class="instruction" type="checkbox" name="instruction" value="&lt;b&gt;-For mild pain:&lt;/b&gt;">For mild pain<br>
+
+
+<input class="instruction" type="checkbox" name="instruction" value="Take Robaxin (methocarbamol) 1500 mg (two 750 mg tablets) every 6-8 hours a needed for pain up to three days.">Robaxin<br>
+
+<input class="instruction" type="checkbox" name="instruction" value="take Flexeril (cyclobenzaprine) 5-10 mg (one or two 5 mg tablets) three times a day as needed for pain.">Flexeril<br>
+<input class="instruction" type="checkbox" name="instruction" value="take Gabapentin 1 pill (300 mg) up to three times a day as needed for pain.">Gabapentin<br>
+
+<input class="instruction" type="checkbox" name="instruction" value="take Flexeril (cyclobenzaprine) 5-10 mg (one or two 5 mg tablets) three times a day as needed for pain.">Flexeril<br>
+<input class="instruction" type="checkbox" name="instruction" value="Use a numbing patch called Lidoderm (lidocaine) patches by applying it to the painful area. You can buy the 4% patches over the counter where you buy medications.  They average $1 per patch.  &lt;br&gt;You should put them on in the morning and leave them on for 12 hours, then you need a 12 hour break.  You should never cut them, or use more than 2 at any time.  If you start feeling light headed, nausea or racing heart, please take the patch off and go to the nearest Emergency Department.">Lidoderm<br>
+
+<input class="instruction" type="checkbox" name="instruction" value="&lt;b&gt;-For severe pain:&lt;/b&gt;">For severe pain<br>
+
+<input class="instruction" type="checkbox" name="instruction" value="Take Tylenol 3 (acetaminophen/codeine) every 6-8 hours as needed. DO NOT take with alcohol or other Tylenol containing medicines.">Tylenol 3<br>
+
+<input class="instruction" type="checkbox" name="instruction" value="take Norco (acetaminophen/hydrocodone) every 6-8 hours as needed. DO NOT take with alcohol or other Tylenol containing medicines.">Norco<br>
+</form>
+
+    <div id="instruction-label" class="instruction-label" aria-live="polite" role="status"></div>
+
+        <script>
+            (function(){
+                // helper to decode HTML entities in the value strings
+                function decodeHtml(html){
+                    const txt = document.createElement('textarea');
+                    txt.innerHTML = html;
+                    return txt.value;
+                }
+
+                        const label = document.getElementById('instruction-label');
+                const checkboxes = Array.from(document.querySelectorAll('input.instruction[type="checkbox"]'));
+                        const editBtn = document.getElementById('edit-btn');
+
+                        // editing flag: when true, updateLabel will not overwrite the label
+                        let editing = false;
+
+                        // toggle edit mode: when editing is true the label becomes editable and checkbox updates are paused
+                        window.toggleEdit = function(){
+                            editing = !editing;
+                            label.contentEditable = editing;
+                            if(editing){
+                                editBtn.textContent = 'Save';
+                                // put caret at end
+                                label.focus();
+                                document.execCommand('selectAll', false, null);
+                                const sel = window.getSelection();
+                                if(sel && sel.rangeCount) sel.collapseToEnd();
+                            } else {
+                                editBtn.textContent = 'Edit';
+                            }
+                        };
+
+                function updateLabel(){
+                    // don't overwrite the label while user is editing it
+                    if(editing) return;
+                    const checked = checkboxes.filter(c => c.checked);
+                    if(checked.length === 0){
+                        label.textContent = '';
+                        return;
+                    }
+
+                    // If only one selected, show it; if many, show a list
+                    if(checked.length === 1){
+                        label.innerHTML = decodeHtml(checked[0].value);
+                    } else {
+                        label.innerHTML = checked.map(c => '<div>' + decodeHtml(c.value) + '</div>').join('');
+                    }
+                }
+
+                        // attach listeners
+                        checkboxes.forEach(cb => cb.addEventListener('change', updateLabel));
+
+                        // initialize on load in case some are pre-checked
+                        updateLabel();
+
+                        // expose copy function to global scope for the button onclick
+                        window.copyInstructionLabel = function(){
+                            const text = label.innerText.trim();
+                            if(!text){
+                                // visual feedback if nothing to copy
+                                const b = document.getElementById('copy-btn');
+                                const prev = b.textContent;
+                                b.textContent = 'Nothing to copy';
+                                setTimeout(()=> b.textContent = prev, 1200);
+                                return;
+                            }
+
+                            // use Clipboard API when available
+                            if(navigator.clipboard && navigator.clipboard.writeText){
+                                navigator.clipboard.writeText(text).then(()=>{
+                                    const b = document.getElementById('copy-btn');
+                                    const prev = b.textContent;
+                                    b.textContent = 'Copied!';
+                                    setTimeout(()=> b.textContent = prev, 1400);
+                                }).catch(()=>{
+                                    // fallback to textarea method
+                                    const ta = document.createElement('textarea');
+                                    ta.value = text;
+                                    document.body.appendChild(ta);
+                                    ta.select();
+                                    try{ document.execCommand('copy'); }
+                                    finally{ document.body.removeChild(ta); }
+                                });
+                            } else {
+                                // fallback for older browsers
+                                const ta = document.createElement('textarea');
+                                ta.value = text;
+                                document.body.appendChild(ta);
+                                ta.select();
+                                try{ document.execCommand('copy');
+                                    const b = document.getElementById('copy-btn');
+                                    const prev = b.textContent;
+                                    b.textContent = 'Copied!';
+                                    setTimeout(()=> b.textContent = prev, 1400);
+                                } finally{ document.body.removeChild(ta); }
+                            }
+                        };
+            })();
+        </script>
+</body>
+</html>
