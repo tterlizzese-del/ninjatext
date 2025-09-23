@@ -6,6 +6,33 @@ body {
     color: white;
 }
 
+/* Top navigation bar */
+.topnav{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(90deg,#0b3d91,#162a55);
+    display: flex;
+    align-items: center;
+    z-index: 40;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+.topnav .nav-inner{
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 16px;
+}
+.nav-brand{ color: #fff; font-weight:700; text-decoration:none; }
+.nav-links a{ color: rgba(255,255,255,0.9); margin-left:12px; text-decoration:none; }
+
+/* push page content below fixed header */
+.page, body > main, body > form, body > h1 { padding-top: 80px; }
+
 .actions {
     padding: 16px;
 }
