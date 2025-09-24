@@ -337,9 +337,11 @@
           function updateLabel(){
             var inputs = inputsForPage();
             var checked = inputs.filter(function(i){ return i.checked; });
-            if(!checked.length){ label.textContent = 'No items selected.'; return; }
+            var prefix = 'Your evaluation was reassuring that you are not having an emergency at this time, but symptoms can change. Please be on the lookout for the following symptoms and return to the ER as needed:';
+            if(!checked.length){ label.textContent = prefix + ' ' + 'No items selected.'; return; }
             var parts = checked.map(function(i){ var decoded = decodeHtml(i.value || ''); return stripHtmlToText(decoded).trim(); }).filter(Boolean);
-            label.textContent = parts.join('\n');
+            // Prefix followed immediately by the items (no extra line break requested)
+            label.textContent = prefix + ' ' + parts.join('\n');
           }
 
           document.addEventListener('change', function(e){ if(e.target && e.target.matches && e.target.matches('input.instruction')) updateLabel(); });
