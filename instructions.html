@@ -324,8 +324,8 @@ You can buy a tool called the NoseFrida to suction secretion from the nose. Inse
             var decoded = decodeHtml(i.value || '');
             return stripHtmlKeepBreaks(decoded).trim();
           }).filter(Boolean);
-          // Join without line breaks per user request
-          label.textContent = parts.join(' ');
+          // Join items with a single newline so each selected item appears on its own line
+          label.textContent = parts.join('\n');
         }
 
         inputs.forEach(function(i){ i.addEventListener('change', updateLabel); });
