@@ -82,11 +82,6 @@
 </form>
           </div>
           </div>
-          <!-- Prefix editor: allows changing the label prefix text for the Instructions page -->
-          <div style="max-width:1200px;margin:8px auto 0;padding:0 16px;color:#fff;">
-            <button id="edit-prefix-btn" class="launch-btn" style="padding:6px 10px;">Edit prefix text</button>
-            <button id="reset-prefix-btn" class="launch-btn" style="padding:6px 10px;background:#444;">Reset prefix</button>
-          </div>
 
         <!-- Column 2: Antimicrobials -->
         <div class="column">
@@ -295,8 +290,10 @@ You can buy a tool called the NoseFrida to suction secretion from the nose. Inse
       <div class="actions-inner">
         <div id="selected-label" class="instruction-label" aria-live="polite">No items selected.</div>
         <div class="action-buttons">
-          <button id="copy-selected-btn" class="copy-btn" type="button">Copy</button>
-          <button id="clear-selected-btn" class="clear-btn" type="button">Clear selection</button>
+            <button id="copy-selected-btn" class="copy-btn" type="button">Copy</button>
+            <button id="clear-selected-btn" class="clear-btn" type="button">Clear selection</button>
+            <button id="edit-prefix-btn" class="launch-btn" style="padding:6px 10px;">Edit prefix text</button>
+            <button id="reset-prefix-btn" class="launch-btn" style="padding:6px 10px;background:#444;">Reset prefix</button>
         </div>
       </div>
     </div>
@@ -321,9 +318,13 @@ You can buy a tool called the NoseFrida to suction secretion from the nose. Inse
         var label = document.getElementById('selected-label');
         var copyBtn = document.getElementById('copy-selected-btn');
 
+        var INSTR_PREFIX_KEY = 'ninjatext_instructions_prefix_v1';
+        var INSTR_DEFAULT_PREFIX = 'It was a pleasure to care for you in the ER.';
+        function readInstrPrefix(){ return localStorage.getItem(INSTR_PREFIX_KEY) || INSTR_DEFAULT_PREFIX; }
+
         function updateLabel(){
           var checked = inputs.filter(function(i){ return i.checked; });
-          var prefix = 'It was a pleasure to care for you in the ER.';
+          var prefix = window.__ninja_prefix_override || readInstrPrefix();
           if(!checked.length){
             label.textContent = prefix + '\n' + 'No items selected.';
             return;
@@ -376,28 +377,14 @@ You can buy a tool called the NoseFrida to suction secretion from the nose. Inse
       })();
     </script>
     <script>
-      // Prefix editor for Instructions page (stored in localStorage)
-      (function(){
-        var EDIT_KEY = 'ninjatext_instructions_prefix_v1';
-        var defaultPrefix = 'It was a pleasure to care for you in the ER.';
-        var editBtn = document.getElementById('edit-prefix-btn');
-        var resetBtn = document.getElementById('reset-prefix-btn');
-        function read(){ return localStorage.getItem(EDIT_KEY) || defaultPrefix; }
-        function write(v){ localStorage.setItem(EDIT_KEY, v); }
-        // Enhance updateLabel to use the stored prefix
-        var origUpdate = window.updateLabel;
-        if(typeof origUpdate === 'function'){
-          window.updateLabel = function(){
-            var prefix = read();
-            // call original logic but with prefix override by temporarily setting a global
-            window.__ninja_prefix_override = prefix;
-            origUpdate();
-            delete window.__ninja_prefix_override;
-          };
-        }
-        editBtn.addEventListener('click', function(){ var cur = read(); var next = prompt('Edit the prefix text shown above (this will be saved to your browser):', cur); if(next!==null){ write(next); if(typeof window.updateLabel === 'function') window.updateLabel(); editBtn.textContent='Saved'; setTimeout(()=>editBtn.textContent='Edit prefix text',1200); }});
-        resetBtn.addEventListener('click', function(){ if(!confirm('Reset prefix to default?')) return; write(defaultPrefix); if(typeof window.updateLabel === 'function') window.updateLabel(); resetBtn.textContent='Reset'; setTimeout(()=>resetBtn.textContent='Reset prefix',1200); });
-      })();
+        // Wire the Edit/Reset buttons for Instructions
+        (function(){
+          var editBtn = document.getElementById('edit-prefix-btn');
+          var resetBtn = document.getElementById('reset-prefix-btn');
+          if(!editBtn || !resetBtn) return;
+          editBtn.addEventListener('click', function(){ var cur = readInstrPrefix(); var next = prompt('Edit the prefix text shown above (saved to this browser):', cur); if(next!==null){ localStorage.setItem(INSTR_PREFIX_KEY, next); updateLabel(); editBtn.textContent='Saved'; setTimeout(()=>editBtn.textContent='Edit prefix text',1200); }});
+          resetBtn.addEventListener('click', function(){ if(!confirm('Reset prefix to default?')) return; localStorage.setItem(INSTR_PREFIX_KEY, INSTR_DEFAULT_PREFIX); updateLabel(); resetBtn.textContent='Reset'; setTimeout(()=>resetBtn.textContent='Reset prefix',1200); });
+        })();
     </script>
   </body>
 </html>
