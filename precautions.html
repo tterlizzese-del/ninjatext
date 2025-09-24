@@ -340,8 +340,8 @@
             var prefix = 'Your evaluation was reassuring that you are not having an emergency at this time, but symptoms can change. Please be on the lookout for the following symptoms and return to the ER as needed:';
             if(!checked.length){ label.textContent = prefix + ' ' + 'No items selected.'; return; }
             var parts = checked.map(function(i){ var decoded = decodeHtml(i.value || ''); return stripHtmlToText(decoded).trim(); }).filter(Boolean);
-            // Prefix followed immediately by the items (append inline, no newlines)
-            label.textContent = prefix + ' ' + parts.join(' ');
+            // Prefix followed immediately by the items (append inline, comma-separated)
+            label.textContent = prefix + ' ' + parts.join(', ');
           }
 
           document.addEventListener('change', function(e){ if(e.target && e.target.matches && e.target.matches('input.instruction')) updateLabel(); });
