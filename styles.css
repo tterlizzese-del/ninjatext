@@ -72,34 +72,30 @@ main, .page { padding-top: 80px; }
 .columns {
     display: flex;
     gap: 20px;
-    justify-content: center;
     align-items: flex-start;
-    padding: 24px 16px 80px; /* space below */
+    padding: 24px 16px 260px; /* extra bottom space so fixed toolbar doesn't cover content */
     box-sizing: border-box;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 .column {
-    flex: 1 1 0;
-    max-width: 18%; /* roughly 5 columns */
+    /* Calculate five equal columns minus gaps (4 gaps of 20px = 80px) */
+    flex: 0 0 calc((100% - 80px) / 5);
+    max-width: calc((100% - 80px) / 5);
     min-width: 160px;
 }
-.column .section { margin-bottom: 24px; }
-.column .section strong { display:block; margin-bottom: 12px; font-weight:700; }
+.column .section { margin-bottom: 32px; }
+.column .section strong { display:block; margin-bottom: 2em; font-weight:700; }
 .column form { display:block; }
 
-@media (max-width: 1000px) {
+@media (max-width: 1200px) {
+    /* Allow wrapping to three columns on medium screens */
     .columns { flex-wrap: wrap; }
-    .column { max-width: 45%; }
+    .column { flex: 0 0 45%; max-width: 45%; }
 }
 
-@media (max-width: 600px) {
-    .column { max-width: 100%; }
-}
-
-    display: block;
-    margin: 20px 16px 8px;
-    font-size: 18px;
-    font-weight: 700;
-    color: #fff;
+@media (max-width: 700px) {
+    .column { flex: 0 0 100%; max-width: 100%; }
 }
 
 .launch-buttons { margin: 18px 0 6px; display:flex; gap:12px; flex-wrap:wrap; }
