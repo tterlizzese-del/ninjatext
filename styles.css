@@ -88,6 +88,9 @@ main, .page { padding-top: 80px; }
 .column .section strong { display:block; margin-bottom: 2em; font-weight:700; }
 .column form { display:block; }
 
+/* Utility: remove bottom gap for a specific heading */
+.no-gap { margin-bottom: 0 !important; }
+
 @media (max-width: 1200px) {
     /* Allow wrapping to three columns on medium screens */
     .columns { flex-wrap: wrap; }
