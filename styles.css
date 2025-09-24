@@ -68,6 +68,33 @@ main, .page { padding-top: 80px; }
 }
 .launch-btn:hover { opacity:0.95; }
 
+/* Instructions page layout: five equal columns centered midline */
+.columns {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px 16px 80px; /* space below */
+    box-sizing: border-box;
+}
+.column {
+    flex: 1 1 0;
+    max-width: 18%; /* roughly 5 columns */
+    min-width: 160px;
+}
+.column .section { margin-bottom: 24px; }
+.column .section strong { display:block; margin-bottom: 12px; font-weight:700; }
+.column form { display:block; }
+
+@media (max-width: 1000px) {
+    .columns { flex-wrap: wrap; }
+    .column { max-width: 45%; }
+}
+
+@media (max-width: 600px) {
+    .column { max-width: 100%; }
+}
+
     display: block;
     margin: 20px 16px 8px;
     font-size: 18px;
