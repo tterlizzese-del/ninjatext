@@ -34,6 +34,137 @@
         <a class="tool-btn" href="https://www.mdcalc.com/" target="_blank" rel="noopener">MD Calc</a>
         <a class="tool-btn" href="https://www.straighthealthcare.com/antibiotic-chart.html#top-page" target="_blank" rel="noopener">Antibiotics</a>
       </div>
+
+      <section style="max-width:900px;margin:28px auto 220px;color:#fff;">
+        <h2 style="margin-top:28px;">Secure local credentials (browser-only)</h2>
+        <p style="opacity:0.9;">You can store usernames/passwords encrypted in your browser. Enter a master password to unlock them. This data is stored encrypted in localStorage on this device only — it is <strong>not</strong> synced or backed up by this app. For multi-device secure storage, use a dedicated password manager (1Password, LastPass, macOS Keychain, etc.).</p>
+
+        <div style="display:flex;gap:12px;align-items:center;margin:8px 0 16px;">
+          <input id="master-pw" type="password" placeholder="Master password" style="flex:1;padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#fff;" />
+          <button id="unlock-btn" class="launch-btn" style="padding:8px 12px;">Unlock</button>
+          <button id="lock-btn" class="launch-btn" style="padding:8px 12px;display:none;background:#444;">Lock</button>
+        </div>
+
+        <div id="cred-area" style="display:none;">
+          <div id="cred-list" style="margin-bottom:12px;font-size:14px;"></div>
+
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+            <input id="new-label" placeholder="Label (eg. UpToDate)" style="flex:1;padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#fff;" />
+            <input id="new-user" placeholder="Username" style="flex:1;padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#fff;" />
+            <input id="new-pass" placeholder="Password" style="flex:1;padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#fff;" />
+            <button id="add-cred" class="launch-btn">Add</button>
+          </div>
+
+          <div style="display:flex;gap:8px;">
+            <button id="save-cred" class="launch-btn">Save encrypted</button>
+            <button id="clear-cred" class="launch-btn" style="background:#444;">Clear all (local)</button>
+          </div>
+        </div>
+      </section>
+
     </main>
+    <script>
+      // Minimal client-side encrypted storage using Web Crypto API
+      (function(){
+        var STORAGE_KEY = 'ninjatext_credentials_v1';
+
+        function bufToB64(buf){
+          var binary = '';
+          var bytes = new Uint8Array(buf);
+          var len = bytes.byteLength;
+          for(var i=0;i<len;i+=1) binary += String.fromCharCode(bytes[i]);
+          return btoa(binary);
+        }
+        function b64ToBuf(b64){
+          var bin = atob(b64);
+          var len = bin.length;
+          var bytes = new Uint8Array(len);
+          for(var i=0;i<len;i++) bytes[i] = bin.charCodeAt(i);
+          return bytes.buffer;
+        }
+
+        async function deriveKey(password, salt){
+          var enc = new TextEncoder();
+          var keyMaterial = await crypto.subtle.importKey('raw', enc.encode(password), {name:'PBKDF2'}, false, ['deriveKey']);
+          return crypto.subtle.deriveKey({name:'PBKDF2', salt: salt, iterations: 150000, hash:'SHA-256'}, keyMaterial, {name:'AES-GCM', length:256}, false, ['encrypt','decrypt']);
+        }
+
+        async function encryptData(password, obj){
+          var salt = crypto.getRandomValues(new Uint8Array(16));
+          var iv = crypto.getRandomValues(new Uint8Array(12));
+          var key = await deriveKey(password, salt.buffer);
+          var enc = new TextEncoder();
+          var data = enc.encode(JSON.stringify(obj));
+          var ct = await crypto.subtle.encrypt({name:'AES-GCM', iv: iv}, key, data);
+          return {salt: bufToB64(salt.buffer), iv: bufToB64(iv.buffer), data: bufToB64(ct)};
+        }
+
+        async function decryptData(password, payload){
+          var salt = b64ToBuf(payload.salt);
+          var iv = b64ToBuf(payload.iv);
+          var ct = b64ToBuf(payload.data);
+          var key = await deriveKey(password, salt);
+          var pt = await crypto.subtle.decrypt({name:'AES-GCM', iv: new Uint8Array(iv)}, key, ct);
+          var dec = new TextDecoder();
+          return JSON.parse(dec.decode(pt));
+        }
+
+        function readStorage(){
+          try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)); }catch(e){ return null; }
+        }
+        function writeStorage(obj){ localStorage.setItem(STORAGE_KEY, JSON.stringify(obj)); }
+        function removeStorage(){ localStorage.removeItem(STORAGE_KEY); }
+
+        var unlockBtn = document.getElementById('unlock-btn');
+        var lockBtn = document.getElementById('lock-btn');
+        var masterInput = document.getElementById('master-pw');
+        var credArea = document.getElementById('cred-area');
+        var credList = document.getElementById('cred-list');
+        var addBtn = document.getElementById('add-cred');
+        var saveBtn = document.getElementById('save-cred');
+        var clearBtn = document.getElementById('clear-cred');
+
+        var currentCredentials = [];
+        var unlocked = false;
+
+        function renderList(){
+          credList.innerHTML = '';
+          if(!currentCredentials.length) { credList.textContent = 'No credentials stored.'; return; }
+          currentCredentials.forEach(function(c, idx){
+            var row = document.createElement('div'); row.style.display='flex'; row.style.gap='8px'; row.style.alignItems='center'; row.style.marginBottom='6px';
+            var label = document.createElement('div'); label.textContent = c.label; label.style.minWidth='120px';
+            var user = document.createElement('div'); user.textContent = c.username; user.style.opacity='0.95'; user.style.flex='1';
+            var copyUser = document.createElement('button'); copyUser.textContent='Copy user'; copyUser.className='launch-btn'; copyUser.style.padding='6px 8px';
+            var copyPass = document.createElement('button'); copyPass.textContent='Copy pass'; copyPass.className='launch-btn'; copyPass.style.padding='6px 8px';
+            copyUser.addEventListener('click', function(){ navigator.clipboard.writeText(c.username); copyUser.textContent='Copied'; setTimeout(()=>copyUser.textContent='Copy user',1200); });
+            copyPass.addEventListener('click', function(){ navigator.clipboard.writeText(c.password); copyPass.textContent='Copied'; setTimeout(()=>copyPass.textContent='Copy pass',1200); });
+            var del = document.createElement('button'); del.textContent='Delete'; del.className='clear-btn'; del.style.padding='6px 8px';
+            del.addEventListener('click', function(){ currentCredentials.splice(idx,1); renderList(); });
+            row.appendChild(label); row.appendChild(user); row.appendChild(copyUser); row.appendChild(copyPass); row.appendChild(del);
+            credList.appendChild(row);
+          });
+        }
+
+        unlockBtn.addEventListener('click', async function(){
+          var pw = masterInput.value || '';
+          if(!pw) { alert('Enter a master password'); return; }
+          var stored = readStorage();
+          if(!stored){ currentCredentials = []; unlocked = true; credArea.style.display='block'; lockBtn.style.display='inline-block'; unlockBtn.style.display='none'; renderList(); return; }
+          try{
+            var data = await decryptData(pw, stored);
+            currentCredentials = data.credentials || [];
+            unlocked = true; credArea.style.display='block'; lockBtn.style.display='inline-block'; unlockBtn.style.display='none'; renderList();
+          }catch(e){ alert('Unable to decrypt — wrong password or corrupted data'); console.error(e); }
+        });
+
+        lockBtn.addEventListener('click', function(){ masterInput.value=''; currentCredentials=[]; unlocked=false; credArea.style.display='none'; lockBtn.style.display='none'; unlockBtn.style.display='inline-block'; credList.innerHTML=''; });
+
+        addBtn.addEventListener('click', function(){ var label=document.getElementById('new-label').value.trim(); var user=document.getElementById('new-user').value.trim(); var pass=document.getElementById('new-pass').value; if(!label) { alert('Add a label'); return; } currentCredentials.push({label:label, username:user, password:pass}); document.getElementById('new-label').value=''; document.getElementById('new-user').value=''; document.getElementById('new-pass').value=''; renderList(); });
+
+        saveBtn.addEventListener('click', async function(){ if(!unlocked){ alert('Unlock first'); return; } var pw = masterInput.value || ''; if(!pw){ alert('Master password missing'); return; } var payload = { credentials: currentCredentials }; var enc = await encryptData(pw, payload); writeStorage(enc); alert('Credentials saved (encrypted) to localStorage on this device.'); });
+
+        clearBtn.addEventListener('click', function(){ if(!confirm('Remove all saved credentials from this browser?')) return; removeStorage(); currentCredentials=[]; renderList(); });
+      })();
+    </script>
   </body>
 </html>
