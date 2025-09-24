@@ -121,7 +121,9 @@ main, .page { padding-top: 80px; }
 .precautions .column form { white-space: nowrap; }
 .precautions .column input.instruction { display:inline-block; vertical-align: middle; }
 .precautions .column label, .precautions .column { white-space: nowrap; }
-.precautions .column .section strong { margin-bottom: 0.8em; }
+.precautions .column .section strong { margin-bottom: 0.4em; display:block; }
+.precautions .column form { white-space: nowrap; margin-top: 0; }
+.precautions .column input.instruction { margin-top: 0.1em; }
 
 @media (max-width: 700px) {
     .column { flex: 0 0 100%; max-width: 100%; }
