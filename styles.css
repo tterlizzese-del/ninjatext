@@ -115,6 +115,14 @@ main, .page { padding-top: 80px; }
     .column { flex: 0 0 45%; max-width: 45%; }
 }
 
+/* Precautions page: use four columns and keep checkbox text on one line */
+.precautions .columns { max-width: 1400px; gap: 18px; }
+.precautions .column { flex: 0 0 calc((100% - 54px) / 4); max-width: calc((100% - 54px) / 4); min-width: 220px; }
+.precautions .column form { white-space: nowrap; }
+.precautions .column input.instruction { display:inline-block; vertical-align: middle; }
+.precautions .column label, .precautions .column { white-space: nowrap; }
+.precautions .column .section strong { margin-bottom: 0.8em; }
+
 @media (max-width: 700px) {
     .column { flex: 0 0 100%; max-width: 100%; }
 }
