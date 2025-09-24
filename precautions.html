@@ -19,7 +19,179 @@
     </header>
 
     <main class="page">
-      <!-- Page content goes here -->
+      <div class="columns">
+        <div class="column">
+          <div class="section">
+            <form id="general-form">
+              <strong>General</strong><br>
+              <!-- checkboxes will be added here -->
+            </form>
+          </div>
+
+          <div class="section">
+            <form id="infectious-form">
+              <strong>Infectious / Immune</strong><br>
+              <!-- checkboxes will be added here -->
+            </form>
+          </div>
+
+          <div class="section">
+            <form id="cardiac-form">
+              <strong>Cardiac</strong><br>
+              <!-- checkboxes will be added here -->
+            </form>
+          </div>
+
+          <div class="section">
+            <form id="pulmonary-form">
+              <strong>Pulmonary</strong><br>
+              <!-- checkboxes will be added here -->
+            </form>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="section">
+            <form id="neuro-form">
+              <strong>Neuro</strong><br>
+              <!-- checkboxes will be added here -->
+            </form>
+          </div>
+
+          <div class="section">
+            <form id="gi-form">
+              <strong>GI</strong><br>
+              <!-- checkboxes will be added here -->
+            </form>
+          </div>
+
+          <div class="section">
+            <form id="gu-renal-form">
+              <strong>GU / Renal</strong><br>
+              <!-- checkboxes will be added here -->
+            </form>
+          </div>
+
+          <div class="section">
+            <form id="skin-form">
+              <strong>Skin</strong><br>
+              <!-- checkboxes will be added here -->
+            </form>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="section">
+            <form id="male-gu-form">
+              <strong>Male GU</strong><br>
+              <!-- checkboxes will be added here -->
+            </form>
+          </div>
+
+          <div class="section">
+            <form id="female-gu-form">
+              <strong>Female GU</strong><br>
+              <!-- checkboxes will be added here -->
+            </form>
+          </div>
+
+          <div class="section">
+            <form id="msk-form">
+              <strong>MSK</strong><br>
+              <!-- checkboxes will be added here -->
+            </form>
+          </div>
+
+          <div class="section">
+            <form id="ent-form">
+              <strong>ENT</strong><br>
+              <!-- checkboxes will be added here -->
+            </form>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="section">
+            <form id="ophtho-form">
+              <strong>Ophtho</strong><br>
+              <!-- checkboxes will be added here -->
+            </form>
+          </div>
+
+          <div class="section">
+            <form id="psych-form">
+              <strong>Psych</strong><br>
+              <!-- checkboxes will be added here -->
+            </form>
+          </div>
+
+          <div class="section">
+            <form id="peds-form">
+              <strong>Peds</strong><br>
+              <!-- checkboxes will be added here -->
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom actions: aggregated label + copy/clear buttons (same behavior as instructions page) -->
+      <div class="actions" aria-hidden="false">
+        <div class="actions-inner">
+          <div id="selected-label" class="instruction-label" aria-live="polite">No items selected.</div>
+          <div class="action-buttons">
+            <button id="copy-selected-btn" class="copy-btn" type="button">Copy</button>
+            <button id="clear-selected-btn" class="clear-btn" type="button">Clear selection</button>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (function(){
+          function decodeHtml(html){
+            var txt = document.createElement('textarea');
+            txt.innerHTML = html;
+            return txt.value;
+          }
+
+          function stripHtmlToText(html){
+            var withSpaces = html.replace(/<br\s*\/?\s*>/gi, ' ');
+            var tmp = document.createElement('div');
+            tmp.innerHTML = withSpaces;
+            return tmp.textContent || tmp.innerText || '';
+          }
+
+          function inputsForPage(){
+            return Array.from(document.querySelectorAll('input.instruction'));
+          }
+
+          var label = document.getElementById('selected-label');
+          var copyBtn = document.getElementById('copy-selected-btn');
+          var clearBtn = document.getElementById('clear-selected-btn');
+
+          function updateLabel(){
+            var inputs = inputsForPage();
+            var checked = inputs.filter(function(i){ return i.checked; });
+            if(!checked.length){ label.textContent = 'No items selected.'; return; }
+            var parts = checked.map(function(i){ var decoded = decodeHtml(i.value || ''); return stripHtmlToText(decoded).trim(); }).filter(Boolean);
+            label.textContent = parts.join('\n');
+          }
+
+          document.addEventListener('change', function(e){ if(e.target && e.target.matches && e.target.matches('input.instruction')) updateLabel(); });
+          updateLabel();
+
+          copyBtn.addEventListener('click', function(){
+            var text = label.textContent || '';
+            if(!text) return;
+            if(navigator.clipboard && navigator.clipboard.writeText){
+              navigator.clipboard.writeText(text).then(function(){ copyBtn.textContent = 'Copied!'; setTimeout(function(){ copyBtn.textContent = 'Copy'; },2000); }, function(){ fallbackCopy(text); });
+            } else { fallbackCopy(text); }
+
+            function fallbackCopy(t){ var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); copyBtn.textContent = 'Copied!'; setTimeout(function(){ copyBtn.textContent = 'Copy'; },2000); }catch(e){ alert('Copy failed'); } document.body.removeChild(ta); }
+          });
+
+          clearBtn.addEventListener('click', function(){ var inputs = inputsForPage(); inputs.forEach(function(i){ i.checked = false; }); updateLabel(); clearBtn.textContent = 'Cleared'; setTimeout(function(){ clearBtn.textContent = 'Clear selection'; },1200); });
+        })();
+      </script>
     </main>
   </body>
 </html>
