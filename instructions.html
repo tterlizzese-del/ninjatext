@@ -163,7 +163,7 @@ mouth twice a day for 7 days.&nbsp;">Augmentin BID x7d<br>
 
           <div class="section">
             <form id="cough-form">>
-<span style="font-weight: bold;"Cough/Cold/Asthma</span><br>
+<span style="font-weight: bold;">Cough/Cold/Asthma</span><br>
 <input class="instruction" type="checkbox" name="instruction" value="Use your albuterol inhaler by taking two puffs every 4-8 hours as needed for shortness of breath.">Albuterol<br>
 
 <input class="instruction" type="checkbox" name="instruction" value="Use your inhaler by exhaling all the way, spraying a puff, inhaling, and holding your breath for 5 seconds. Repeat one more time.">Inhailer instructions<br>
@@ -283,5 +283,73 @@ You can buy a tool called the NoseFrida to suction secretion from the nose. Inse
         </div>
       </div>
     </main>
+    <!-- Bottom actions: aggregated label + copy button -->
+    <div class="actions" aria-hidden="false">
+      <div class="actions-inner">
+        <div id="selected-label" class="instruction-label" aria-live="polite">No items selected.</div>
+        <button id="copy-selected-btn" class="copy-btn" type="button">Copy</button>
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        function decodeHtml(html){
+          var txt = document.createElement('textarea');
+          txt.innerHTML = html;
+          return txt.value;
+        }
+
+        function stripHtmlKeepBreaks(html){
+          // Replace <br> with newlines, then strip remaining tags
+          var withNewlines = html.replace(/<br\s*\/?\s*>/gi, '\n');
+          var tmp = document.createElement('div');
+          tmp.innerHTML = withNewlines;
+          return tmp.textContent || tmp.innerText || '';
+        }
+
+        var inputs = Array.from(document.querySelectorAll('input.instruction'));
+        var label = document.getElementById('selected-label');
+        var copyBtn = document.getElementById('copy-selected-btn');
+
+        function updateLabel(){
+          var checked = inputs.filter(function(i){ return i.checked; });
+          if(!checked.length){
+            label.textContent = 'No items selected.';
+            return;
+          }
+          var parts = checked.map(function(i){
+            var decoded = decodeHtml(i.value || '');
+            return stripHtmlKeepBreaks(decoded).trim();
+          }).filter(Boolean);
+          label.textContent = parts.join('\n\n');
+        }
+
+        inputs.forEach(function(i){ i.addEventListener('change', updateLabel); });
+        // initialize
+        updateLabel();
+
+        copyBtn.addEventListener('click', function(){
+          var text = label.textContent || '';
+          if(!text) return;
+          if(navigator.clipboard && navigator.clipboard.writeText){
+            navigator.clipboard.writeText(text).then(function(){
+              copyBtn.textContent = 'Copied!';
+              setTimeout(function(){ copyBtn.textContent = 'Copy'; }, 2000);
+            }, fallbackCopy);
+          } else {
+            fallbackCopy();
+          }
+
+          function fallbackCopy(){
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            try{ document.execCommand('copy'); copyBtn.textContent = 'Copied!'; setTimeout(function(){ copyBtn.textContent = 'Copy'; }, 2000); } catch(e){ alert('Copy failed'); }
+            document.body.removeChild(ta);
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
