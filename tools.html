@@ -56,6 +56,12 @@
             <button id="add-cred" class="launch-btn">Add</button>
           </div>
 
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap;">
+            <label for="upload-file" style="padding:8px 12px;border-radius:6px;background:#0b3d91;color:#fff;cursor:pointer;">Upload file</label>
+            <input id="upload-file" type="file" accept=".txt" style="display:none;" />
+            <div style="opacity:0.9;font-size:13px;">Format: <code>Website: Username: Password</code> (one per line)</div>
+          </div>
+
           <div style="display:flex;gap:8px;">
             <button id="save-cred" class="launch-btn">Save encrypted</button>
             <button id="clear-cred" class="launch-btn" style="background:#444;">Clear all (local)</button>
@@ -127,6 +133,7 @@
 
         var currentCredentials = [];
         var unlocked = false;
+  var pendingImport = [];
 
         function renderList(){
           credList.innerHTML = '';
@@ -155,12 +162,56 @@
             var data = await decryptData(pw, stored);
             currentCredentials = data.credentials || [];
             unlocked = true; credArea.style.display='block'; lockBtn.style.display='inline-block'; unlockBtn.style.display='none'; renderList();
+            // If there are pending imports from file upload, merge them now
+            if(pendingImport && pendingImport.length){
+              pendingImport.forEach(function(c){ currentCredentials.push(c); });
+              pendingImport = [];
+              renderList();
+              alert('Imported credentials from uploaded file.');
+            }
           }catch(e){ alert('Unable to decrypt — wrong password or corrupted data'); console.error(e); }
         });
 
         lockBtn.addEventListener('click', function(){ masterInput.value=''; currentCredentials=[]; unlocked=false; credArea.style.display='none'; lockBtn.style.display='none'; unlockBtn.style.display='inline-block'; credList.innerHTML=''; });
 
         addBtn.addEventListener('click', function(){ var label=document.getElementById('new-label').value.trim(); var user=document.getElementById('new-user').value.trim(); var pass=document.getElementById('new-pass').value; if(!label) { alert('Add a label'); return; } currentCredentials.push({label:label, username:user, password:pass}); document.getElementById('new-label').value=''; document.getElementById('new-user').value=''; document.getElementById('new-pass').value=''; renderList(); });
+
+        // File upload import handling
+        var uploadInput = document.getElementById('upload-file');
+        uploadInput.addEventListener('change', function(e){
+          var f = uploadInput.files && uploadInput.files[0];
+          if(!f) return; if(f.size > 5 * 1024 * 1024){ alert('File too large (max 5MB)'); return; }
+          var reader = new FileReader();
+          reader.onload = function(ev){
+            var text = String(ev.target.result || '');
+            var lines = text.split(/\r?\n/).map(function(l){ return l.trim(); }).filter(Boolean);
+            var imports = [];
+            var bad = 0;
+            lines.forEach(function(line){
+              // Split into three parts by ':' — allow colons inside fields by limiting to first two splits
+              var parts = line.split(':');
+              if(parts.length < 3){ bad++; return; }
+              var label = parts[0].trim();
+              var user = parts[1].trim();
+              var pass = parts.slice(2).join(':').trim();
+              if(!label) { bad++; return; }
+              imports.push({label:label, username:user, password:pass});
+            });
+            if(!imports.length){ alert('No valid entries found in file.'); return; }
+            if(!unlocked){
+              // stash imports until user unlocks
+              pendingImport = pendingImport.concat(imports);
+              alert('File parsed. Unlock the credential area with your master password to import the accounts.');
+            } else {
+              currentCredentials = currentCredentials.concat(imports);
+              renderList();
+              alert('Imported ' + imports.length + ' credentials.');
+            }
+          };
+          reader.readAsText(f);
+          // reset input so same file can be re-uploaded later if needed
+          uploadInput.value = '';
+        });
 
         saveBtn.addEventListener('click', async function(){ if(!unlocked){ alert('Unlock first'); return; } var pw = masterInput.value || ''; if(!pw){ alert('Master password missing'); return; } var payload = { credentials: currentCredentials }; var enc = await encryptData(pw, payload); writeStorage(enc); alert('Credentials saved (encrypted) to localStorage on this device.'); });
 
