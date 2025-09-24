@@ -15,6 +15,7 @@
           <a href="instructions.html">Instructions</a>
           <a href="precautions.html">Precautions</a>
           <a href="tools.html">Tools</a>
+          <a href="about.html">About</a>
         </nav>
       </div>
     </header>
@@ -310,6 +311,12 @@
         </div>
       </div>
 
+      <!-- Prefix editor for Precautions page -->
+      <div style="max-width:1200px;margin:8px auto 120px;padding:0 16px;color:#fff;">
+        <button id="edit-prec-prefix-btn" class="launch-btn" style="padding:6px 10px;">Edit prefix text</button>
+        <button id="reset-prec-prefix-btn" class="launch-btn" style="padding:6px 10px;background:#444;">Reset prefix</button>
+      </div>
+
       <script>
         (function(){
           function decodeHtml(html){
@@ -357,6 +364,48 @@
           });
 
           clearBtn.addEventListener('click', function(){ var inputs = inputsForPage(); inputs.forEach(function(i){ i.checked = false; }); updateLabel(); clearBtn.textContent = 'Cleared'; setTimeout(function(){ clearBtn.textContent = 'Clear selection'; },1200); });
+        })();
+      </script>
+      <script>
+        // Prefix editor for Precautions page (separate block to avoid colliding with main logic)
+        (function(){
+          var EDIT_KEY = 'ninjatext_precautions_prefix_v1';
+          var defaultPrefix = 'Your evaluation was reassuring that you are not having an emergency at this time, but symptoms can change. Please be on the lookout for the following symptoms and return to the ER as needed:';
+          var editBtn = document.getElementById('edit-prec-prefix-btn');
+          var resetBtn = document.getElementById('reset-prec-prefix-btn');
+          function read(){ return localStorage.getItem(EDIT_KEY) || defaultPrefix; }
+          function write(v){ localStorage.setItem(EDIT_KEY, v); }
+
+          // If updateLabel exists, wrap it so it uses stored prefix when available
+          if(window.updateLabel && typeof window.updateLabel === 'function'){
+            var orig = window.updateLabel;
+            window.updateLabel = function(){
+              var stored = read();
+              // expose temporary override for main script to pick up
+              window.__ninja_prec_prefix = stored;
+              try{ orig(); }finally{ delete window.__ninja_prec_prefix; }
+            };
+            // call once to initialize with stored prefix
+            window.updateLabel();
+          } else {
+            // No global updateLabel available — provide a fallback that updates the label directly
+            var label = document.getElementById('selected-label');
+            function applyStoredPrefix(){
+              var cur = label.textContent || '';
+              var stored = read();
+              if(cur.indexOf(':')>-1){
+                // naive replace: prefix before first ':'
+                var rest = cur.substring(cur.indexOf(':')+1).trim();
+                label.textContent = stored + ' ' + rest;
+              } else {
+                label.textContent = stored + ' ' + cur;
+              }
+            }
+            applyStoredPrefix();
+          }
+
+          editBtn.addEventListener('click', function(){ var cur = read(); var next = prompt('Edit the prefix text for Precautions (saved in this browser):', cur); if(next!==null){ write(next); if(window.updateLabel) window.updateLabel(); editBtn.textContent='Saved'; setTimeout(()=>editBtn.textContent='Edit prefix text',1200); }});
+          resetBtn.addEventListener('click', function(){ if(!confirm('Reset prefix to default?')) return; write(defaultPrefix); if(window.updateLabel) window.updateLabel(); resetBtn.textContent='Reset'; setTimeout(()=>resetBtn.textContent='Reset prefix',1200); });
         })();
       </script>
     </main>
