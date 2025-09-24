@@ -162,7 +162,7 @@ mouth twice a day for 7 days.&nbsp;">Augmentin BID x7d<br>
           </div>
 
           <div class="section">
-            <form id="cough-form">>
+            <form id="cough-form">
 <span style="font-weight: bold;">Cough/Cold/Asthma</span><br>
 <input class="instruction" type="checkbox" name="instruction" value="Use your albuterol inhaler by taking two puffs every 4-8 hours as needed for shortness of breath.">Albuterol<br>
 
@@ -287,7 +287,10 @@ You can buy a tool called the NoseFrida to suction secretion from the nose. Inse
     <div class="actions" aria-hidden="false">
       <div class="actions-inner">
         <div id="selected-label" class="instruction-label" aria-live="polite">No items selected.</div>
-        <button id="copy-selected-btn" class="copy-btn" type="button">Copy</button>
+        <div class="action-buttons">
+          <button id="copy-selected-btn" class="copy-btn" type="button">Copy</button>
+          <button id="clear-selected-btn" class="clear-btn" type="button">Clear selection</button>
+        </div>
       </div>
     </div>
 
@@ -300,10 +303,10 @@ You can buy a tool called the NoseFrida to suction secretion from the nose. Inse
         }
 
         function stripHtmlKeepBreaks(html){
-          // Replace <br> with newlines, then strip remaining tags
-          var withNewlines = html.replace(/<br\s*\/?\s*>/gi, '\n');
+          // Replace <br> with spaces (we don't want newlines in the aggregated label), then strip remaining tags
+          var withSpaces = html.replace(/<br\s*\/?\s*>/gi, ' ');
           var tmp = document.createElement('div');
-          tmp.innerHTML = withNewlines;
+          tmp.innerHTML = withSpaces;
           return tmp.textContent || tmp.innerText || '';
         }
 
@@ -321,7 +324,8 @@ You can buy a tool called the NoseFrida to suction secretion from the nose. Inse
             var decoded = decodeHtml(i.value || '');
             return stripHtmlKeepBreaks(decoded).trim();
           }).filter(Boolean);
-          label.textContent = parts.join('\n\n');
+          // Join without line breaks per user request
+          label.textContent = parts.join(' ');
         }
 
         inputs.forEach(function(i){ i.addEventListener('change', updateLabel); });
@@ -349,6 +353,18 @@ You can buy a tool called the NoseFrida to suction secretion from the nose. Inse
             document.body.removeChild(ta);
           }
         });
+
+        // Clear selection button
+        var clearBtn = document.getElementById('clear-selected-btn');
+        if(clearBtn){
+          clearBtn.addEventListener('click', function(){
+            inputs.forEach(function(i){ i.checked = false; });
+            updateLabel();
+            // briefly show a visual feedback on clear button
+            clearBtn.textContent = 'Cleared';
+            setTimeout(function(){ clearBtn.textContent = 'Clear selection'; }, 1200);
+          });
+        }
       })();
     </script>
   </body>
