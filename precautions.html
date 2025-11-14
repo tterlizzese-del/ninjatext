@@ -354,7 +354,7 @@
             var trimmedAddition = (addition || '').trim();
             if(!trimmedExisting) return trimmedAddition;
             if(!trimmedAddition) return trimmedExisting;
-            return trimmedExisting + '\n' + trimmedAddition;
+            return trimmedExisting + '\n\n' + trimmedAddition;
           }
 
           copyBtn.addEventListener('click', function(){
