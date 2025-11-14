@@ -306,6 +306,7 @@
           <div id="selected-label" class="instruction-label" aria-live="polite">No items selected.</div>
           <div class="action-buttons">
             <button id="copy-selected-btn" class="copy-btn" type="button">Copy</button>
+            <button id="append-clipboard-btn" class="copy-btn" type="button">Add to clipboard</button>
             <button id="clear-selected-btn" class="clear-btn" type="button">Clear selection</button>
           </div>
         </div>
@@ -332,6 +333,7 @@
 
           var label = document.getElementById('selected-label');
           var copyBtn = document.getElementById('copy-selected-btn');
+          var appendBtn = document.getElementById('append-clipboard-btn');
           var clearBtn = document.getElementById('clear-selected-btn');
 
           function updateLabel(){
@@ -347,6 +349,14 @@
           document.addEventListener('change', function(e){ if(e.target && e.target.matches && e.target.matches('input.instruction')) updateLabel(); });
           updateLabel();
 
+          function mergeClipboardText(existing, addition){
+            var trimmedExisting = (existing || '').replace(/\s+$/, '');
+            var trimmedAddition = (addition || '').trim();
+            if(!trimmedExisting) return trimmedAddition;
+            if(!trimmedAddition) return trimmedExisting;
+            return trimmedExisting + '\n' + trimmedAddition;
+          }
+
           copyBtn.addEventListener('click', function(){
             var text = label.textContent || '';
             if(!text) return;
@@ -356,6 +366,24 @@
 
             function fallbackCopy(t){ var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); copyBtn.textContent = 'Copied!'; setTimeout(function(){ copyBtn.textContent = 'Copy'; },2000); }catch(e){ alert('Copy failed'); } document.body.removeChild(ta); }
           });
+
+          if(appendBtn){
+            appendBtn.addEventListener('click', function(){
+              var addition = label.textContent || '';
+              if(!addition) return;
+              if(!(navigator.clipboard && navigator.clipboard.readText && navigator.clipboard.writeText)){
+                alert('Clipboard append is not supported in this browser.');
+                return;
+              }
+              navigator.clipboard.readText().catch(function(){ return ''; }).then(function(existing){
+                var combined = mergeClipboardText(existing, addition);
+                return navigator.clipboard.writeText(combined);
+              }).then(function(){
+                appendBtn.textContent = 'Added!';
+                setTimeout(function(){ appendBtn.textContent = 'Add to clipboard'; },2000);
+              }).catch(function(){ alert('Unable to append to clipboard. Please check clipboard permissions.'); });
+            });
+          }
 
           clearBtn.addEventListener('click', function(){ var inputs = inputsForPage(); inputs.forEach(function(i){ i.checked = false; }); updateLabel(); clearBtn.textContent = 'Cleared'; setTimeout(function(){ clearBtn.textContent = 'Clear selection'; },1200); });
         })();
