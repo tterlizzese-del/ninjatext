@@ -356,7 +356,8 @@
             if(!trimmedExisting) return trimmedAddition;
             if(!trimmedAddition) return trimmedExisting;
             var paragraphBreak = /\r\n/.test(existingText) ? '\r\n\r\n' : '\n\n';
-            return trimmedExisting + paragraphBreak + trimmedAddition;
+            var extraBreak = paragraphBreak === '\r\n\r\n' ? '\r\n' : '\n';
+            return trimmedExisting + paragraphBreak + extraBreak + trimmedAddition;
           }
 
           copyBtn.addEventListener('click', function(){
