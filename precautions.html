@@ -350,11 +350,13 @@
           updateLabel();
 
           function mergeClipboardText(existing, addition){
-            var trimmedExisting = (existing || '').replace(/\s+$/, '');
+            var existingText = existing || '';
+            var trimmedExisting = existingText.replace(/\s+$/, '');
             var trimmedAddition = (addition || '').trim();
             if(!trimmedExisting) return trimmedAddition;
             if(!trimmedAddition) return trimmedExisting;
-            return trimmedExisting + '\n\n' + trimmedAddition;
+            var paragraphBreak = /\r\n/.test(existingText) ? '\r\n\r\n' : '\n\n';
+            return trimmedExisting + paragraphBreak + trimmedAddition;
           }
 
           copyBtn.addEventListener('click', function(){
