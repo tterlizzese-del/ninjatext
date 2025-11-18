@@ -88,13 +88,13 @@
             </div>
             <span aria-hidden="true">›</span>
           </button>
-          <button class="reference-card" type="button" data-target="reference-peds.html">
+          <a class="reference-card" href="reference-peds.html">
             <div>
               <div class="reference-card-label">Pediatric Emergencies</div>
               <div class="reference-card-sub">Weight-based crash cart dosing.</div>
             </div>
             <span aria-hidden="true">›</span>
-          </button>
+          </a>
           <button class="reference-card" type="button" data-target="reference-obgyn.html">
             <div>
               <div class="reference-card-label">OB / GYN</div>
@@ -103,190 +103,8 @@
             <span aria-hidden="true">›</span>
           </button>
         </section>
-        <section class="pedi-reference" aria-label="Pediatric reference quick sheet">
-          <div class="pedi-header">PEDI /***/ Crash Cart Reference</div>
-          <div class="pedi-controls">
-            <label for="pedi-age-input">
-              Age (years)
-              <input id="pedi-age-input" type="number" min="0" step="0.1" placeholder="yrs" aria-describedby="age-helper">
-            </label>
-            <label for="pedi-weight-input">
-              Patient weight (kg)
-              <input id="pedi-weight-input" type="number" min="0" step="0.1" placeholder="kg" aria-describedby="weight-helper">
-            </label>
-          </div>
-          <div id="age-helper" class="pedi-helper">Age powers the estimation formulas.</div>
-          <div id="weight-helper" class="pedi-helper">Weight drives the mg/kg dosing math.</div>
-
-          <div class="pedi-section">
-            <h3>PEDI /***/ Calculations</h3>
-            <ul class="pedi-list">
-              <li>
-                <strong>Estimated Pedi Weight in kg:</strong>
-                2 × age (years) + 8 →
-                <span class="pedi-value" data-output="est-weight">--</span> kg
-              </li>
-              <li>
-                <strong>Estimated Pedi SBP:</strong>
-                70 + 2 × age (years) →
-                <span class="pedi-value" data-output="est-sbp">--</span> mmHg
-              </li>
-              <li>
-                <strong>ET tube size (cuffed):</strong>
-                age (years)/4 + 3 →
-                <span class="pedi-value" data-output="et-cuffed">--</span> mm
-              </li>
-              <li>
-                <strong>ET tube size (uncuffed):</strong>
-                age (years)/4 + 4 →
-                <span class="pedi-value" data-output="et-uncuffed">--</span> mm
-              </li>
-            </ul>
-          </div>
-
-          <div class="pedi-section">
-            <h3>PEDI /***/ PALS</h3>
-            <ul class="pedi-list">
-              <li>
-                <strong>Atropine 0.02 mg/kg up to 0.5 mg per dose:</strong>
-                <span class="pedi-value" data-output="pals-atropine">--</span> mg
-              </li>
-              <li>
-                <strong>Adenosine 0.1 mg/kg, then 0.2 mg/kg:</strong>
-                <span class="pedi-value" data-output="pals-adenosine">-- / --</span> mg
-              </li>
-              <li>
-                <strong>Epi (Code dose) 0.01 mg/kg (of 0.1 mg/mL) per IV/IO:</strong>
-                <span class="pedi-value" data-output="pals-epi-code">--</span> mg
-              </li>
-              <li>
-                <strong>Lidocaine 1 mg/kg:</strong>
-                <span class="pedi-value" data-output="pals-lidocaine">--</span> mg
-              </li>
-              <li>
-                <strong>Naloxone 0.1 mg/kg every 2-3 mins until response:</strong>
-                <span class="pedi-value" data-output="pals-naloxone">--</span> mg
-              </li>
-            </ul>
-          </div>
-
-          <div class="pedi-section">
-            <h3>PEDI /***/ ET Tube meds: LANE</h3>
-            <div class="pedi-helper">
-              <p>Instructions:</p>
-              <ol class="pedi-instructions">
-                <li>Give 2-3 × IV dose through ET, except for Epinephrine (×10 IV dose).</li>
-                <li>Dilute med in 5 mL NS.</li>
-                <li>Hold compressions, give dilute med, follow with 5 mL flush.</li>
-                <li>Deliver 5 breaths after the flush.</li>
-              </ol>
-            </div>
-            <ul class="pedi-list">
-              <li>
-                <strong>Lidocaine 2-3 mg/kg (IV is 1 mg/kg):</strong>
-                <span class="pedi-value" data-output="lane-lidocaine">-- to --</span> mg
-              </li>
-              <li>
-                <strong>Atropine 0.04-0.06 mg/kg (IV is 0.02 mg/kg):</strong>
-                <span class="pedi-value" data-output="lane-atropine">-- to --</span> mg
-              </li>
-              <li>
-                <strong>Naloxone 0.2-0.3 mg/kg (IV is 0.1 mg/kg):</strong>
-                <span class="pedi-value" data-output="lane-naloxone">-- to --</span> mg
-              </li>
-              <li>
-                <strong>Epinephrine 0.1 mg/kg:</strong>
-                <span class="pedi-value" data-output="lane-epinephrine">--</span> mg
-              </li>
-            </ul>
-          </div>
-        </section>
         <div class="reference-footer">More sections coming soon — let me know what to surface first.</div>
       </div>
     </main>
-    <script>
-      (function () {
-        const ageInput = document.getElementById('pedi-age-input');
-        const weightInput = document.getElementById('pedi-weight-input');
-
-        const outputs = {
-          estWeight: document.querySelector('[data-output="est-weight"]'),
-          estSBP: document.querySelector('[data-output="est-sbp"]'),
-          etCuffed: document.querySelector('[data-output="et-cuffed"]'),
-          etUncuffed: document.querySelector('[data-output="et-uncuffed"]'),
-          palsAtropine: document.querySelector('[data-output="pals-atropine"]'),
-          palsAdenosine: document.querySelector('[data-output="pals-adenosine"]'),
-          palsEpiCode: document.querySelector('[data-output="pals-epi-code"]'),
-          palsLidocaine: document.querySelector('[data-output="pals-lidocaine"]'),
-          palsNaloxone: document.querySelector('[data-output="pals-naloxone"]'),
-          laneLidocaine: document.querySelector('[data-output="lane-lidocaine"]'),
-          laneAtropine: document.querySelector('[data-output="lane-atropine"]'),
-          laneNaloxone: document.querySelector('[data-output="lane-naloxone"]'),
-          laneEpinephrine: document.querySelector('[data-output="lane-epinephrine"]'),
-        };
-
-        const formatNumber = (value, decimals = 2) => {
-          if (!isFinite(value)) return '--';
-          const fixed = value.toFixed(decimals);
-          return Number(fixed).toString();
-        };
-
-        const renderRange = (low, high, decimals = 2) => {
-          if (!isFinite(low) || !isFinite(high)) return '-- to --';
-          return formatNumber(low, decimals) + ' to ' + formatNumber(high, decimals);
-        };
-
-        const updateAgeCalcs = () => {
-          const age = parseFloat(ageInput.value);
-          if (!isFinite(age)) {
-            outputs.estWeight.textContent = '--';
-            outputs.estSBP.textContent = '--';
-            outputs.etCuffed.textContent = '--';
-            outputs.etUncuffed.textContent = '--';
-            return;
-          }
-          const estWeight = 2 * age + 8;
-          outputs.estWeight.textContent = formatNumber(estWeight, 1);
-          outputs.estSBP.textContent = formatNumber(70 + 2 * age, 0);
-          outputs.etCuffed.textContent = formatNumber(age / 4 + 3, 1);
-          outputs.etUncuffed.textContent = formatNumber(age / 4 + 4, 1);
-        };
-
-        const updateWeightCalcs = () => {
-          const weight = parseFloat(weightInput.value);
-          if (!isFinite(weight)) {
-            outputs.palsAtropine.textContent = '--';
-            outputs.palsAdenosine.textContent = '-- / --';
-            outputs.palsEpiCode.textContent = '--';
-            outputs.palsLidocaine.textContent = '--';
-            outputs.palsNaloxone.textContent = '--';
-            outputs.laneLidocaine.textContent = '-- to --';
-            outputs.laneAtropine.textContent = '-- to --';
-            outputs.laneNaloxone.textContent = '-- to --';
-            outputs.laneEpinephrine.textContent = '--';
-            return;
-          }
-          const atropineDose = Math.min(0.02 * weight, 0.5);
-          outputs.palsAtropine.textContent = formatNumber(atropineDose);
-          const adenosineFirst = 0.1 * weight;
-          const adenosineSecond = 0.2 * weight;
-          outputs.palsAdenosine.textContent = formatNumber(adenosineFirst) + ' / ' + formatNumber(adenosineSecond);
-          outputs.palsEpiCode.textContent = formatNumber(0.01 * weight);
-          outputs.palsLidocaine.textContent = formatNumber(weight);
-          outputs.palsNaloxone.textContent = formatNumber(0.1 * weight);
-          outputs.laneLidocaine.textContent = renderRange(2 * weight, 3 * weight);
-          outputs.laneAtropine.textContent = renderRange(0.04 * weight, 0.06 * weight);
-          outputs.laneNaloxone.textContent = renderRange(0.2 * weight, 0.3 * weight);
-          outputs.laneEpinephrine.textContent = formatNumber(0.1 * weight);
-        };
-
-        ageInput.addEventListener('input', () => {
-          updateAgeCalcs();
-        });
-        weightInput.addEventListener('input', () => {
-          updateWeightCalcs();
-        });
-      })();
-    </script>
   </body>
 </html>
