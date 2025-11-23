@@ -22,201 +22,125 @@
     </header>
 
     <main class="reference-page">
-      <div class="reference-app" aria-label="Pediatric crash cart reference">
+      <div class="reference-app" aria-label="Pediatric emergencies reference">
         <div class="reference-status">
           <span class="reference-status-title">Pediatric Reference</span>
-          <span class="reference-status-pill">Ready</span>
         </div>
         <section class="reference-hero">
           <h1>Pediatric Crash Cart</h1>
-          <p>Enter age and weight to auto-fill Broselow-style calculations, PALS doses, and ET-tube meds.</p>
+          <p>Quick formulas, PALS doses, airway meds, ventilator targets, and congenital heart pearls.</p>
         </section>
 
-        <section class="pedi-reference" aria-label="Pediatric reference quick sheet">
-          <div class="pedi-header">Pediatric Crash Cart Reference</div>
-          <div class="pedi-controls">
-            <label for="pedi-age-input">
-              Age (years)
-              <input id="pedi-age-input" type="number" min="0" step="0.1" placeholder="yrs" aria-describedby="age-helper">
-            </label>
-            <label for="pedi-weight-input">
-              Patient weight (kg)
-              <input id="pedi-weight-input" type="number" min="0" step="0.1" placeholder="kg" aria-describedby="weight-helper">
-            </label>
-          </div>
-          <div id="age-helper" class="pedi-helper">Age powers the estimation formulas.</div>
-          <div id="weight-helper" class="pedi-helper">Weight drives the mg/kg dosing math.</div>
-
-          <div class="pedi-section">
-            <h3>Pediatric Calculations</h3>
-            <ul class="pedi-list">
-              <li>
-                <strong>Estimated Pedi Weight in kg:</strong>
-                2 × age (years) + 8 →
-                <span class="pedi-value" data-output="est-weight">--</span> kg
-              </li>
-              <li>
-                <strong>Estimated Pediatric SBP:</strong>
-                70 + 2 × age (years) →
-                <span class="pedi-value" data-output="est-sbp">--</span> mmHg
-              </li>
-              <li>
-                <strong>ET tube size (cuffed):</strong>
-                age (years)/4 + 3 →
-                <span class="pedi-value" data-output="et-cuffed">--</span> mm
-              </li>
-              <li>
-                <strong>ET tube size (uncuffed):</strong>
-                age (years)/4 + 4 →
-                <span class="pedi-value" data-output="et-uncuffed">--</span> mm
-              </li>
-            </ul>
-          </div>
-
-          <div class="pedi-section">
-            <h3>PALS Dosing</h3>
-            <ul class="pedi-list">
-              <li>
-                <strong>Atropine 0.02 mg/kg up to 0.5 mg per dose:</strong>
-                <span class="pedi-value" data-output="pals-atropine">--</span> mg
-              </li>
-              <li>
-                <strong>Adenosine 0.1 mg/kg, then 0.2 mg/kg:</strong>
-                <span class="pedi-value" data-output="pals-adenosine">-- / --</span> mg
-              </li>
-              <li>
-                <strong>Epi (Code dose) 0.01 mg/kg (of 0.1 mg/mL) per IV/IO:</strong>
-                <span class="pedi-value" data-output="pals-epi-code">--</span> mg
-              </li>
-              <li>
-                <strong>Lidocaine 1 mg/kg:</strong>
-                <span class="pedi-value" data-output="pals-lidocaine">--</span> mg
-              </li>
-              <li>
-                <strong>Naloxone 0.1 mg/kg every 2-3 mins until response:</strong>
-                <span class="pedi-value" data-output="pals-naloxone">--</span> mg
-              </li>
-            </ul>
-          </div>
-
-          <div class="pedi-section">
-            <h3>ET Tube meds: LANE</h3>
-            <div class="pedi-helper">
-              <p>Instructions:</p>
-              <ol class="pedi-instructions">
-                <li>Give 2-3 × IV dose through ET, except for Epinephrine (×10 IV dose).</li>
-                <li>Dilute med in 5 mL NS.</li>
-                <li>Hold compressions, give dilute med, follow with 5 mL flush.</li>
-                <li>Deliver 5 breaths after the flush.</li>
-              </ol>
-            </div>
-            <ul class="pedi-list">
-              <li>
-                <strong>Lidocaine 2-3 mg/kg (IV is 1 mg/kg):</strong>
-                <span class="pedi-value" data-output="lane-lidocaine">-- to --</span> mg
-              </li>
-              <li>
-                <strong>Atropine 0.04-0.06 mg/kg (IV is 0.02 mg/kg):</strong>
-                <span class="pedi-value" data-output="lane-atropine">-- to --</span> mg
-              </li>
-              <li>
-                <strong>Naloxone 0.2-0.3 mg/kg (IV is 0.1 mg/kg):</strong>
-                <span class="pedi-value" data-output="lane-naloxone">-- to --</span> mg
-              </li>
-              <li>
-                <strong>Epinephrine 0.1 mg/kg:</strong>
-                <span class="pedi-value" data-output="lane-epinephrine">--</span> mg
-              </li>
-            </ul>
-          </div>
+        <section class="reference-detail" aria-label="Pediatric calculations">
+          <h2>Calculations</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Estimated weight (kg):</strong> 2 × age (years) + 8.</li>
+            <li><strong>Estimated SBP:</strong> 70 + 2 × age (years).</li>
+            <li><strong>ET tube size (cuffed):</strong> age ÷ 4 + 3.</li>
+            <li><strong>ET tube size (uncuffed):</strong> age ÷ 4 + 4.</li>
+          </ul>
         </section>
 
-        <div class="reference-footer">Need another pediatric section? Ping me.</div>
+        <section class="reference-detail" aria-label="PALS dosing">
+          <h2>PALS</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Atropine:</strong> 0.02 mg/kg up to 0.5 mg per dose.</li>
+            <li><strong>Adenosine:</strong> 0.1 mg/kg then 0.2 mg/kg.</li>
+            <li><strong>Epinephrine (code dose):</strong> 0.01 mg/kg of 0.1 mg/mL IV/IO.</li>
+            <li><strong>Lidocaine:</strong> 1 mg/kg.</li>
+            <li><strong>Naloxone:</strong> 0.1 mg/kg every 2–3 min until response.</li>
+          </ul>
+        </section>
+
+        <section class="reference-detail" aria-label="ET tube medications">
+          <h2>ET Tube Meds (LANE)</h2>
+          <p>Give 2–3 × the IV dose via ET except epinephrine (10 × IV dose). Dilute in 5 mL NS, hold compressions, administer, flush with 5 mL, then deliver 5 breaths.</p>
+          <ul class="reference-detail-list">
+            <li><strong>Lidocaine:</strong> 2–3 mg/kg.</li>
+            <li><strong>Atropine:</strong> 0.04–0.06 mg/kg.</li>
+            <li><strong>Naloxone:</strong> 0.2–0.3 mg/kg.</li>
+            <li><strong>Epinephrine:</strong> 0.1 mg/kg.</li>
+          </ul>
+        </section>
+
+        <section class="reference-detail" aria-label="Electricity">
+          <h2>Electricity</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Defibrillation:</strong> 2–4 J/kg.</li>
+            <li><strong>Cardioversion:</strong> 0.5–1 J/kg, then 2 J/kg.</li>
+          </ul>
+        </section>
+
+        <section class="reference-detail" aria-label="Airway and allergic reaction">
+          <h2>Airway &amp; Allergic Reaction</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Albuterol:</strong> Continuous 10 mg/hr.</li>
+            <li><strong>Diphenhydramine:</strong> 1–2 mg/kg IV/IM/PO.</li>
+            <li><strong>Epinephrine IM (anaphylaxis):</strong> 0.01 mg/kg up to twice q20 min.</li>
+            <li><strong>Epinephrine infusion:</strong> 0.05–1 mcg/kg/min.</li>
+            <li><strong>Racemic epi:</strong> 5 mg (2.25% solution) or 5 mg of 1 mg/mL epi diluted in 5 mL NS.</li>
+            <li><strong>Dexamethasone:</strong> 0.6 mg/kg IV/IM/PO.</li>
+            <li><strong>Methylprednisolone:</strong> 1–2 mg/kg IV/PO.</li>
+          </ul>
+        </section>
+
+        <section class="reference-detail" aria-label="Hypoglycemia">
+          <h2>Hypoglycemia</h2>
+          <p>Dextrose formula: % dextrose × mL = 50.</p>
+          <ul class="reference-detail-list">
+            <li><strong>Neonate–1 year:</strong> D10 × 5 mL/kg.</li>
+            <li><strong>1–8 years:</strong> D25 × 2 mL/kg.</li>
+            <li><strong>&gt;8 years:</strong> D50 × 1 mL/kg.</li>
+            <li><strong>Glucagon (SQ):</strong> 0.03 mg/kg.</li>
+          </ul>
+        </section>
+
+        <section class="reference-detail" aria-label="Pediatric RSI">
+          <h2>Pediatric RSI</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Ketamine:</strong> 1.5 mg/kg IV.</li>
+            <li><strong>Propofol:</strong> 2–3 mg/kg IV.</li>
+            <li><strong>Succinylcholine:</strong> 1.5 mg/kg IV.</li>
+            <li><strong>Rocuronium:</strong> 0.6–1.2 mg/kg IV.</li>
+          </ul>
+        </section>
+
+        <section class="reference-detail" aria-label="Ventilator settings">
+          <h2>Ventilator Targets</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Tidal volume:</strong> 6–8 mL/kg.</li>
+            <li><strong>Respiratory rate:</strong> 15–20; obstructive 5–8; ARDS 12–20; &lt;2 yrs 20–25; neonates 25–40.</li>
+            <li><strong>PEEP:</strong> 3–8; obstructive 0.5; ARDS 2–15.</li>
+            <li><strong>FiO<sub>2</sub>:</strong> Start 100%, wean as tolerated.</li>
+            <li><strong>I:E ratio:</strong> 1:2 standard; obstructive 1:4; ARDS 1:2.</li>
+            <li><strong>High-flow nasal cannula:</strong> 0.5–2 mL/kg.</li>
+          </ul>
+        </section>
+
+        <section class="reference-detail" aria-label="Sedation">
+          <h2>Sedation</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Midazolam:</strong> 0.05–0.1 mg/kg IV/IM (max 6 mg); 0.4 mg/kg IN (max 10 mg).</li>
+            <li><strong>Droperidol:</strong> 0.05 mg/kg IV/IM.</li>
+            <li><strong>Lorazepam:</strong> 0.05–0.1 mg/kg IV/IM/PO.</li>
+            <li><strong>Fentanyl:</strong> 1–2 mcg/kg IV.</li>
+            <li><strong>Ketamine:</strong> 1–1.5 mg/kg IV or 4 mg/kg IM.</li>
+          </ul>
+        </section>
+
+        <section class="reference-detail" aria-label="Neonate and congenital heart">
+          <h2>Neonate &amp; Congenital Heart Pearls</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Alprostadil:</strong> 0.05–0.1 mcg/kg/min.</li>
+            <li><strong>Neonatal seizures:</strong> Keep this section for your go-to regimen.</li>
+            <li><strong>Single-ventricle physiology:</strong> BT/Sano (semi-permanent PDA), Glenn (SVC→PA), Fontan (IVC→PA); expect SpO<sub>2</sub> ≈ 75%.</li>
+            <li><strong>Color cues:</strong> Blue baby = R→L shunt, early presentation → needs prostaglandin. Gray baby = LV outflow pathology weeks–months after birth → needs prostaglandin. Pink baby = L→R shunt months–years → needs diuresis/BiPAP.</li>
+          </ul>
+          <a class="reference-detail-link" href="reference.html">← Back to Reference Hub</a>
+        </section>
+
+        <div class="reference-footer">Pediatric dosing crib sheet loaded.</div>
       </div>
     </main>
-    <script>
-      (function () {
-        const ageInput = document.getElementById('pedi-age-input');
-        const weightInput = document.getElementById('pedi-weight-input');
-
-        const outputs = {
-          estWeight: document.querySelector('[data-output="est-weight"]'),
-          estSBP: document.querySelector('[data-output="est-sbp"]'),
-          etCuffed: document.querySelector('[data-output="et-cuffed"]'),
-          etUncuffed: document.querySelector('[data-output="et-uncuffed"]'),
-          palsAtropine: document.querySelector('[data-output="pals-atropine"]'),
-          palsAdenosine: document.querySelector('[data-output="pals-adenosine"]'),
-          palsEpiCode: document.querySelector('[data-output="pals-epi-code"]'),
-          palsLidocaine: document.querySelector('[data-output="pals-lidocaine"]'),
-          palsNaloxone: document.querySelector('[data-output="pals-naloxone"]'),
-          laneLidocaine: document.querySelector('[data-output="lane-lidocaine"]'),
-          laneAtropine: document.querySelector('[data-output="lane-atropine"]'),
-          laneNaloxone: document.querySelector('[data-output="lane-naloxone"]'),
-          laneEpinephrine: document.querySelector('[data-output="lane-epinephrine"]'),
-        };
-
-        const formatNumber = (value, decimals = 2) => {
-          if (!isFinite(value)) return '--';
-          const fixed = value.toFixed(decimals);
-          return Number(fixed).toString();
-        };
-
-        const renderRange = (low, high, decimals = 2) => {
-          if (!isFinite(low) || !isFinite(high)) return '-- to --';
-          return formatNumber(low, decimals) + ' to ' + formatNumber(high, decimals);
-        };
-
-        const updateAgeCalcs = () => {
-          const age = parseFloat(ageInput.value);
-          if (!isFinite(age)) {
-            outputs.estWeight.textContent = '--';
-            outputs.estSBP.textContent = '--';
-            outputs.etCuffed.textContent = '--';
-            outputs.etUncuffed.textContent = '--';
-            return;
-          }
-          const estWeight = 2 * age + 8;
-          outputs.estWeight.textContent = formatNumber(estWeight, 1);
-          outputs.estSBP.textContent = formatNumber(70 + 2 * age, 0);
-          outputs.etCuffed.textContent = formatNumber(age / 4 + 3, 1);
-          outputs.etUncuffed.textContent = formatNumber(age / 4 + 4, 1);
-        };
-
-        const updateWeightCalcs = () => {
-          const weight = parseFloat(weightInput.value);
-          if (!isFinite(weight)) {
-            outputs.palsAtropine.textContent = '--';
-            outputs.palsAdenosine.textContent = '-- / --';
-            outputs.palsEpiCode.textContent = '--';
-            outputs.palsLidocaine.textContent = '--';
-            outputs.palsNaloxone.textContent = '--';
-            outputs.laneLidocaine.textContent = '-- to --';
-            outputs.laneAtropine.textContent = '-- to --';
-            outputs.laneNaloxone.textContent = '-- to --';
-            outputs.laneEpinephrine.textContent = '--';
-            return;
-          }
-          const atropineDose = Math.min(0.02 * weight, 0.5);
-          outputs.palsAtropine.textContent = formatNumber(atropineDose);
-          const adenosineFirst = 0.1 * weight;
-          const adenosineSecond = 0.2 * weight;
-          outputs.palsAdenosine.textContent = formatNumber(adenosineFirst) + ' / ' + formatNumber(adenosineSecond);
-          outputs.palsEpiCode.textContent = formatNumber(0.01 * weight);
-          outputs.palsLidocaine.textContent = formatNumber(weight);
-          outputs.palsNaloxone.textContent = formatNumber(0.1 * weight);
-          outputs.laneLidocaine.textContent = renderRange(2 * weight, 3 * weight);
-          outputs.laneAtropine.textContent = renderRange(0.04 * weight, 0.06 * weight);
-          outputs.laneNaloxone.textContent = renderRange(0.2 * weight, 0.3 * weight);
-          outputs.laneEpinephrine.textContent = formatNumber(0.1 * weight);
-        };
-
-        ageInput.addEventListener('input', () => {
-          updateAgeCalcs();
-        });
-        weightInput.addEventListener('input', () => {
-          updateWeightCalcs();
-        });
-      })();
-    </script>
   </body>
 </html>

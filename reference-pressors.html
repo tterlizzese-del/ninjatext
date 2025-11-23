@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Pressors Reference — NinjaText</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topnav">
+      <div class="nav-inner">
+        <a class="nav-brand" href="index.html">NinjaText | Pressors</a>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="instructions.html">Instructions</a>
+          <a href="precautions.html">Precautions</a>
+          <a href="tools.html">Tools</a>
+          <a href="reference.html">Reference</a>
+          <a href="about.html">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="reference-page">
+      <div class="reference-app" aria-label="Pressor reference">
+        <div class="reference-status">
+          <span class="reference-status-title">Pressors</span>
+        </div>
+        <section class="reference-hero">
+          <h1>Vasoactive Drips &amp; Shock</h1>
+          <p>Weight-based dosing bands for the common drips plus the quick recipe for the dirty epi bag.</p>
+        </section>
+        <section class="reference-detail weight-calculator" aria-label="Weight based pressor calculator">
+          <h2>Weight Input</h2>
+          <label>
+            Patient weight (kg)
+            <input type="number" min="1" step="1" placeholder="kg" data-weight-input data-dose-group="pressors">
+          </label>
+          <p class="reference-detail-note">Enter the patient’s weight to convert mcg/kg/min ranges into mcg/min targets.</p>
+        </section>
+        <section class="reference-detail" aria-label="Pressor dosing">
+          <h2>Continuous Infusions</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Norepinephrine:</strong> 0.01–1 mcg/kg/min (→ <span data-dose-group="pressors" data-dose-low="0.01" data-dose-high="1" data-dose-unit="mcg" data-dose-period="min">--</span>).</li>
+            <li><strong>Epinephrine:</strong> 0.01–1 mcg/kg/min (→ <span data-dose-group="pressors" data-dose-low="0.01" data-dose-high="1" data-dose-unit="mcg" data-dose-period="min">--</span>).</li>
+            <li><strong>Dobutamine:</strong> 2.5–20 mcg/kg/min (→ <span data-dose-group="pressors" data-dose-low="2.5" data-dose-high="20" data-dose-unit="mcg" data-dose-period="min">--</span>).</li>
+            <li><strong>Dopamine:</strong> 5–20 mcg/kg/min (→ <span data-dose-group="pressors" data-dose-low="5" data-dose-high="20" data-dose-unit="mcg" data-dose-period="min">--</span>).</li>
+            <li><strong>Vasopressin:</strong> 0.04 U/min (fixed dose).</li>
+            <li><strong>Phenylephrine:</strong> 0.5–6 mcg/kg/min (→ <span data-dose-group="pressors" data-dose-low="0.5" data-dose-high="6" data-dose-unit="mcg" data-dose-period="min">--</span>).</li>
+          </ul>
+        </section>
+        <section class="reference-detail" aria-label="Dirty epi drip">
+          <h2>Dirty Epinephrine Drip</h2>
+          <p>Use when you need a quick push-dose friendly drip before pharmacy bags arrive.</p>
+          <ul class="reference-detail-list">
+            <li>Inject <strong>1 mg (1 mL) of crash-cart epinephrine</strong> into a 1 L bag of normal saline.</li>
+            <li>The resulting solution is <strong>1 mcg/mL</strong>.</li>
+            <li>Run the line wide open and <strong>titrate to blood pressure response</strong>.</li>
+          </ul>
+          <p class="reference-detail-note">Layer in shock algorithms or titration pearls as you iterate.</p>
+          <a class="reference-detail-link" href="reference.html">← Back to Reference Hub</a>
+        </section>
+        <div class="reference-footer">Pressor cheat sheet loaded.</div>
+      </div>
+    </main>
+    <script src="reference-calcs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Neurologic Emergencies — NinjaText</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topnav">
+      <div class="nav-inner">
+        <a class="nav-brand" href="index.html">NinjaText | Neuro</a>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="instructions.html">Instructions</a>
+          <a href="precautions.html">Precautions</a>
+          <a href="tools.html">Tools</a>
+          <a href="reference.html">Reference</a>
+          <a href="about.html">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="reference-page">
+      <div class="reference-app" aria-label="Neurologic emergencies reference">
+        <div class="reference-status">
+          <span class="reference-status-title">Neurologic Emergencies</span>
+        </div>
+        <section class="reference-hero">
+          <h1>Neuro &amp; Stroke</h1>
+          <p>ICP control, seizure ladders, and cerebrovascular blood pressure windows packaged for rapid review.</p>
+        </section>
+        <section class="reference-detail weight-calculator" aria-label="Weight based neuro calculator">
+          <h2>Weight Input</h2>
+          <label>
+            Patient weight (kg)
+            <input type="number" min="1" step="1" placeholder="kg" data-weight-input data-dose-group="neuro">
+          </label>
+          <p class="reference-detail-note">Enter weight to convert mg/kg, mcg/kg, or g/kg therapies into ready-to-chart numbers.</p>
+        </section>
+        <section class="reference-detail" aria-label="ICP management">
+          <h2>Increased ICP</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Mannitol 20%:</strong> 0.25–1 g/kg (→ <span data-dose-group="neuro" data-dose-low="0.25" data-dose-high="1" data-dose-unit="g">--</span>).</li>
+            <li><strong>Hypertonic saline:</strong> 3 mL/kg.</li>
+            <li><strong>Dexamethasone:</strong> 10 mg IV.</li>
+          </ul>
+        </section>
+        <section class="reference-detail" aria-label="Seizure rescue">
+          <h2>Seizure Rescue</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Lorazepam:</strong> 2–4 mg IV.</li>
+            <li><strong>Midazolam:</strong> 5–10 mg IM.</li>
+            <li><strong>Diazepam:</strong> 5–10 mg IV.</li>
+            <li><strong>Levetiracetam:</strong> 20–60 mg/kg IV (max 4.5 g) (→ <span data-dose-group="neuro" data-dose-low="20" data-dose-high="60" data-dose-unit="mg" data-dose-max="4500">--</span>).</li>
+            <li><strong>Phenytoin/fosphenytoin:</strong> 20 mg/kg (→ <span data-dose-group="neuro" data-dose-value="20" data-dose-unit="mg">--</span>).</li>
+            <li><strong>Valproic acid:</strong> 20–30 mg/kg (→ <span data-dose-group="neuro" data-dose-low="20" data-dose-high="30" data-dose-unit="mg">--</span>).</li>
+          </ul>
+        </section>
+        <section class="reference-detail" aria-label="Status epilepticus">
+          <h2>Status Epilepticus</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Lorazepam:</strong> 4 mg IV, repeat as needed.</li>
+            <li><strong>Midazolam infusion:</strong> 0.04–0.6 mg/kg/hr (→ <span data-dose-group="neuro" data-dose-low="0.04" data-dose-high="0.6" data-dose-unit="mg" data-dose-period="hr" data-dose-decimals="3">--</span>).</li>
+            <li><strong>Propofol:</strong> Bolus 1–2 mg/kg (→ <span data-dose-group="neuro" data-dose-low="1" data-dose-high="2" data-dose-unit="mg">--</span>) then infusion 5–80 mcg/kg/min (→ <span data-dose-group="neuro" data-dose-low="5" data-dose-high="80" data-dose-unit="mcg" data-dose-period="min">--</span>).</li>
+            <li><strong>Phenobarbital load:</strong> 20 mg/kg (→ <span data-dose-group="neuro" data-dose-value="20" data-dose-unit="mg">--</span>), transition to pentobarbital 0.5–5 mg/kg/hr (→ <span data-dose-group="neuro" data-dose-low="0.5" data-dose-high="5" data-dose-unit="mg" data-dose-period="hr">--</span>).</li>
+          </ul>
+        </section>
+        <section class="reference-detail" aria-label="Intracerebral hemorrhage">
+          <h2>Intracerebral Hemorrhage (IPH)</h2>
+          <ul class="reference-detail-list">
+            <li><strong>BP goal:</strong> SBP &lt; 140 mmHg.</li>
+            <li><strong>Nicardipine:</strong> Start 5 mg/hr, increase by 2.5 mg/hr q5–15 min (max 15 mg/hr).</li>
+            <li><strong>Clevidipine:</strong> Start 1–2 mg/hr, double every 90 sec to goal (max 16 mg/hr).</li>
+            <li><strong>Levetiracetam:</strong> 20–60 mg/kg IV (max 4.5 g) for seizure prophylaxis (→ <span data-dose-group="neuro" data-dose-low="20" data-dose-high="60" data-dose-unit="mg" data-dose-max="4500">--</span>).</li>
+          </ul>
+        </section>
+        <section class="reference-detail" aria-label="CVA management">
+          <h2>Cerebrovascular Accident</h2>
+          <ul class="reference-detail-list">
+            <li><strong>BP goals:</strong> &lt;220 mmHg unless receiving thrombolytics; then &lt;180 mmHg.</li>
+            <li><strong>tPA (alteplase):</strong> Bolus 0.09 mg/kg (max 9 mg) (→ <span data-dose-group="neuro" data-dose-value="0.09" data-dose-unit="mg" data-dose-max="9">--</span>) then 0.81 mg/kg over 60 min (max 81 mg) (→ <span data-dose-group="neuro" data-dose-value="0.81" data-dose-unit="mg" data-dose-max="81">--</span>) — total 0.9 mg/kg (max 90 mg) (→ <span data-dose-group="neuro" data-dose-value="0.9" data-dose-unit="mg" data-dose-max="90">--</span>).</li>
+            <li><strong>tNK (tenecteplase):</strong> 0.25 mg/kg IV bolus (max 25 mg) (→ <span data-dose-group="neuro" data-dose-value="0.25" data-dose-unit="mg" data-dose-max="25">--</span>).</li>
+          </ul>
+          <a class="reference-detail-link" href="reference.html">← Back to Reference Hub</a>
+        </section>
+        <div class="reference-footer">Neuro dosing and BP targets ready.</div>
+      </div>
+    </main>
+    <script src="reference-calcs.js"></script>
+  </body>
+</html>

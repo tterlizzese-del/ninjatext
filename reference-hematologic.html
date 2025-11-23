@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Hematologic Emergencies — NinjaText</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topnav">
+      <div class="nav-inner">
+        <a class="nav-brand" href="index.html">NinjaText | Hematology</a>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="instructions.html">Instructions</a>
+          <a href="precautions.html">Precautions</a>
+          <a href="tools.html">Tools</a>
+          <a href="reference.html">Reference</a>
+          <a href="about.html">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="reference-page">
+      <div class="reference-app" aria-label="Hematologic emergencies reference">
+        <div class="reference-status">
+          <span class="reference-status-title">Hematologic Emergencies</span>
+        </div>
+        <section class="reference-hero">
+          <h1>Heme Criticals</h1>
+          <p>Anticoagulation reversal, PCC/FFP/cryoprecipitate dosing, TXA for trauma, and hemophilia factor replacement.</p>
+        </section>
+        <section class="reference-detail weight-calculator" aria-label="Weight based hematology calculator">
+          <h2>Weight Input</h2>
+          <label>
+            Patient weight (kg)
+            <input type="number" min="1" step="1" placeholder="kg" data-weight-input data-dose-group="heme">
+          </label>
+          <p class="reference-detail-note">Use this field to calculate mcg/kg dosing when needed (e.g., ddAVP).</p>
+        </section>
+        <section class="reference-detail" aria-label="Anticoagulation reversal">
+          <h2>Anticoagulation Reversal</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Warfarin:</strong> Vitamin K 10 mg IV + PCC for active bleeding.</li>
+            <li><strong>Heparin:</strong> Protamine 1 mg per 100 U IV heparin administered within last 2 h.</li>
+            <li><strong>Dabigatran:</strong> Idarucizumab 5 g IV.</li>
+            <li><strong>Apixaban/Rivaroxaban:</strong> Andexanet alfa or PCC.</li>
+            <li><strong>Aspirin/antiplatelet:</strong> Desmopressin (ddAVP) 0.3–0.4 mcg/kg IV (→ <span data-dose-group="heme" data-dose-low="0.3" data-dose-high="0.4" data-dose-unit="mcg">--</span>).</li>
+          </ul>
+          <p class="reference-detail-note">PCC is low volume; FFP larger volume; cryo for fibrinogen replacement.</p>
+        </section>
+        <section class="reference-detail" aria-label="Factor products">
+          <h2>PCC / FFP / Cryo Dosing</h2>
+          <ul class="reference-detail-list">
+            <li><strong>PCC (4-factor):</strong> INR 2–4 → 25 IU/kg; INR 4–6 → 35 IU/kg; INR &gt;6 → 50 IU/kg (max 5,000 IU).</li>
+            <li><strong>FFP:</strong> 10–30 mL/kg IV.</li>
+            <li><strong>Cryoprecipitate:</strong> 10 units IV.</li>
+          </ul>
+        </section>
+        <section class="reference-detail" aria-label="TXA and trauma">
+          <h2>TXA</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Trauma-induced hemorrhage:</strong> 1 g over 10 min, then 1 g over 8 h (if within 3 h of injury).</li>
+          </ul>
+        </section>
+        <section class="reference-detail" aria-label="Hemophilia replacement">
+          <h2>Hemophilia Factor Replacement</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Hemophilia A:</strong> Recombinant factor VIII 50 IU/kg ≈ 100% activity.</li>
+            <li><strong>Hemophilia B:</strong> Recombinant factor IX 100 IU/kg ≈ 100% activity.</li>
+          </ul>
+          <a class="reference-detail-link" href="reference.html">← Back to Reference Hub</a>
+        </section>
+        <div class="reference-footer">Hematology reversal toolkit ready.</div>
+      </div>
+    </main>
+    <script src="reference-calcs.js"></script>
+  </body>
+</html>

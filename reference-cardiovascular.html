@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Cardiovascular Emergencies — NinjaText</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topnav">
+      <div class="nav-inner">
+        <a class="nav-brand" href="index.html">NinjaText | Cardiovascular</a>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="instructions.html">Instructions</a>
+          <a href="precautions.html">Precautions</a>
+          <a href="tools.html">Tools</a>
+          <a href="reference.html">Reference</a>
+          <a href="about.html">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="reference-page">
+      <div class="reference-app" aria-label="Cardiovascular emergencies reference">
+        <div class="reference-status">
+          <span class="reference-status-title">Cardiovascular Emergencies</span>
+        </div>
+        <section class="reference-hero">
+          <h1>Cardio Crisis Playbook</h1>
+          <p>Hypertensive crisis kits, ACS anticoagulation, rhythm ladders, LVAD pearls, and thromboembolism dosing in one view.</p>
+        </section>
+        <section class="reference-detail weight-calculator" aria-label="Weight based cardiovascular calculator">
+          <h2>Weight Input</h2>
+          <label>
+            Patient weight (kg)
+            <input type="number" min="1" step="1" placeholder="kg" data-weight-input data-dose-group="cardio">
+          </label>
+          <p class="reference-detail-note">Use this to flip mg/kg or mcg/kg values into actual doses.</p>
+        </section>
+        <section class="reference-detail" aria-label="Hypertension management">
+          <h2>Hypertensive Emergency</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Esmolol:</strong> 500 mcg/kg bolus (→ <span data-dose-group="cardio" data-dose-value="500" data-dose-unit="mcg">--</span>) then 50–300 mcg/kg/min infusion (→ <span data-dose-group="cardio" data-dose-low="50" data-dose-high="300" data-dose-unit="mcg" data-dose-period="min">--</span>).</li>
+            <li><strong>Labetalol:</strong> 10–80 mg IV bolus (or 2–8 mg/min infusion).</li>
+            <li><strong>Nitroglycerin:</strong> 5–400 mcg/min infusion.</li>
+            <li><strong>Nicardipine:</strong> Start 5 mg/hr, up-titrate by 2.5 mg/hr q5–15 min (max 15 mg/hr).</li>
+            <li><strong>Clevidipine:</strong> Start 1–2 mg/hr, double q90 sec until target (max 16 mg/hr).</li>
+          </ul>
+        </section>
+        <section class="reference-detail" aria-label="ACS therapy">
+          <h2>Acute Coronary Syndrome</h2>
+          <ul class="reference-detail-list">
+            <li><strong>tPA:</strong> 15 mg IV bolus → 50 mg over 30 min → 35 mg over 60 min (total 100 mg).</li>
+            <li><strong>Heparin:</strong> 60 U/kg IV bolus (max 5,000 U) then 12 U/kg/hr infusion (max 1,200 U/hr).</li>
+          </ul>
+        </section>
+        <section class="reference-detail" aria-label="Brady tachy ladders">
+          <h2>Bradycardia &amp; Tachycardia</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Atropine:</strong> 0.5–1 mg IV q3–5 min (max 3 mg).</li>
+            <li><strong>New-onset Afib anticoagulation:</strong> Heparin 60 U/kg bolus (max 5,000 U) then 12 U/kg/hr (max 1,200 U/hr).</li>
+            <li><strong>Afib RVR:</strong> Amiodarone 150 mg bolus then 1 mg/min ×6 h; Diltiazem 0.25 mg/kg bolus (→ <span data-dose-group="cardio" data-dose-value="0.25" data-dose-unit="mg">--</span>) then 5–15 mg/hr infusion; Procainamide 17 mg/kg loading (→ <span data-dose-group="cardio" data-dose-value="17" data-dose-unit="mg">--</span>) at 20–30 mg/min; Lidocaine 20–50 mg/min bolus (1–4 mg/min infusion).</li>
+          </ul>
+        </section>
+        <section class="reference-detail" aria-label="LVAD pearls">
+          <h2>LVAD Essentials</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Normal values:</strong> Flow 4–6 L/min, power 4–6 W, RPM device-dependent; MAP goal 65–90 mmHg (doppler).</li>
+            <li><strong>Shock workup:</strong> MAP, ECG, echo, EtCO<sub>2</sub>, CBC, INR, LDH.</li>
+            <li><strong>Electrical therapy:</strong> Defibrillation is safe for ventricular rhythms.</li>
+            <li><strong>Volume cues:</strong> Dilated RV suggests thrombus; collapsed LV suggests hypovolemia (give 500 mL boluses as needed).</li>
+            <li><strong>Alarms:</strong> LOW FLOW → consider suction/hemorrhage (check INR); Red X/HIGH POWER → pump thrombus (LDH &gt;3× ULN); AMS + high MAP → suspect stroke.</li>
+            <li><strong>Shock treatment:</strong> Acute RV failure with dobutamine 2.5–20 mcg/kg/min (→ <span data-dose-group="cardio" data-dose-low="2.5" data-dose-high="20" data-dose-unit="mcg" data-dose-period="min">--</span>); other causes start norepinephrine.</li>
+            <li><strong>Notes:</strong> LVAD patients are preload dependent and afterload sensitive; inspect driveline for infection; adjust ECG filter to 20 Hz.</li>
+          </ul>
+        </section>
+        <section class="reference-detail" aria-label="Thromboembolism">
+          <h2>DVT &amp; PE</h2>
+          <ul class="reference-detail-list">
+            <li><strong>DVT Heparin:</strong> 80 U/kg bolus (max 10,000 U) then 18 U/kg/hr infusion (max 2,000 U/hr).</li>
+            <li><strong>PE thrombolysis:</strong> tPA 100 mg over 2 h; in cardiac arrest 50 mg push over 2 min.</li>
+            <li><strong>PE Heparin:</strong> 80 U/kg bolus (max 10,000 U) then 18 U/kg/hr (max 2,000 U/hr).</li>
+          </ul>
+        </section>
+        <section class="reference-detail" aria-label="Valvulopathies">
+          <h2>Valvulopathy Pearls</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Aortic stenosis:</strong> Avoid vasodilators; definitive fix is surgical. <strong>No nitroglycerin.</strong></li>
+            <li><strong>Aortic regurgitation:</strong> Avoid beta blockers; temporize with dobutamine or nitroprusside.</li>
+            <li><strong>Mitral stenosis:</strong> Avoid beta blockers; surgical solution.</li>
+            <li><strong>Mitral regurgitation:</strong> Avoid vasodilators; consider dobutamine for inotropy/afterload reduction.</li>
+          </ul>
+          <a class="reference-detail-link" href="reference.html">← Back to Reference Hub</a>
+        </section>
+        <div class="reference-footer">Cardiovascular bundle compiled.</div>
+      </div>
+    </main>
+    <script src="reference-calcs.js"></script>
+  </body>
+</html>

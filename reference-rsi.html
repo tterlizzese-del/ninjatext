@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>RSI Reference — NinjaText</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topnav">
+      <div class="nav-inner">
+        <a class="nav-brand" href="index.html">NinjaText | RSI</a>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="instructions.html">Instructions</a>
+          <a href="precautions.html">Precautions</a>
+          <a href="tools.html">Tools</a>
+          <a href="reference.html">Reference</a>
+          <a href="about.html">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="reference-page">
+      <div class="reference-app" aria-label="Rapid sequence intubation reference">
+        <div class="reference-status">
+          <span class="reference-status-title">Rapid Sequence Intubation</span>
+        </div>
+        <section class="reference-hero">
+          <h1>Airway &amp; RSI</h1>
+          <p>Side-by-side induction, paralytic, and post-intubation sedation dosing to streamline medication planning.</p>
+        </section>
+        <section class="reference-detail weight-calculator" aria-label="Weight based RSI calculator">
+          <h2>Weight Input</h2>
+          <label>
+            Patient weight (kg)
+            <input type="number" min="1" step="1" placeholder="kg" data-weight-input data-dose-group="rsi">
+          </label>
+          <p class="reference-detail-note">Plug in patient weight to translate mg/kg or mcg/kg orders into real-world doses.</p>
+        </section>
+        <section class="reference-detail" aria-label="RSI induction">
+          <h2>Induction Agents</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Propofol:</strong> 1.5–2 mg/kg (→ <span data-dose-group="rsi" data-dose-low="1.5" data-dose-high="2" data-dose-unit="mg">--</span>).</li>
+            <li><strong>Ketamine:</strong> 1–2 mg/kg (→ <span data-dose-group="rsi" data-dose-low="1" data-dose-high="2" data-dose-unit="mg">--</span>).</li>
+            <li><strong>Etomidate:</strong> 0.3 mg/kg (→ <span data-dose-group="rsi" data-dose-value="0.3" data-dose-unit="mg">--</span>).</li>
+            <li><strong>Midazolam:</strong> 0.3 mg/kg (→ <span data-dose-group="rsi" data-dose-value="0.3" data-dose-unit="mg">--</span>).</li>
+          </ul>
+        </section>
+        <section class="reference-detail" aria-label="RSI paralytics">
+          <h2>Paralytics</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Rocuronium:</strong> 0.8–1.2 mg/kg (→ <span data-dose-group="rsi" data-dose-low="0.8" data-dose-high="1.2" data-dose-unit="mg">--</span>).</li>
+            <li><strong>Succinylcholine:</strong> 1–1.5 mg/kg (→ <span data-dose-group="rsi" data-dose-low="1" data-dose-high="1.5" data-dose-unit="mg">--</span>).</li>
+          </ul>
+        </section>
+        <section class="reference-detail" aria-label="Post intubation sedation">
+          <h2>Post-Intubation Sedation</h2>
+          <ul class="reference-detail-list">
+            <li><strong>Propofol:</strong> Bolus 0.5–1 mg/kg (→ <span data-dose-group="rsi" data-dose-low="0.5" data-dose-high="1" data-dose-unit="mg">--</span>); infusion 5–80 mcg/kg/min (→ <span data-dose-group="rsi" data-dose-low="5" data-dose-high="80" data-dose-unit="mcg" data-dose-period="min">--</span>).</li>
+            <li><strong>Midazolam:</strong> Bolus 1–5 mg; infusion 0.04–0.2 mg/kg/hr (→ <span data-dose-group="rsi" data-dose-low="0.04" data-dose-high="0.2" data-dose-unit="mg" data-dose-period="hr" data-dose-decimals="3">--</span>).</li>
+            <li><strong>Lorazepam:</strong> Bolus 1–4 mg; infusion 0.01–0.1 mg/kg/hr (→ <span data-dose-group="rsi" data-dose-low="0.01" data-dose-high="0.1" data-dose-unit="mg" data-dose-period="hr" data-dose-decimals="3">--</span>).</li>
+            <li><strong>Dexmedetomidine:</strong> Infusion 0.2–1.5 mcg/kg/hr (→ <span data-dose-group="rsi" data-dose-low="0.2" data-dose-high="1.5" data-dose-unit="mcg" data-dose-period="hr">--</span>).</li>
+            <li><strong>Fentanyl:</strong> Bolus 1–3 mcg/kg (→ <span data-dose-group="rsi" data-dose-low="1" data-dose-high="3" data-dose-unit="mcg">--</span>); infusion 25–250 mcg/hr.</li>
+            <li><strong>Morphine:</strong> Bolus 0.5–10 mg; infusion 2–30 mg/hr.</li>
+          </ul>
+          <p class="reference-detail-note">Add pretreatment or rescue meds here if needed.</p>
+          <a class="reference-detail-link" href="reference.html">← Back to Reference Hub</a>
+        </section>
+        <div class="reference-footer">RSI dosing bands captured.</div>
+      </div>
+    </main>
+    <script src="reference-calcs.js"></script>
+  </body>
+</html>

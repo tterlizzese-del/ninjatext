@@ -149,6 +149,64 @@ main, .page { padding-top: 80px; }
     color: rgba(248,249,255,0.7);
     margin-top: 4px;
 }
+.reference-detail{
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 24px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+.reference-detail h2{
+    margin: 0;
+    font-size: 18px;
+}
+.reference-detail p{
+    margin: 0;
+    color: rgba(248,249,255,0.82);
+}
+.reference-detail-list{
+    margin: 0;
+    padding-left: 18px;
+    color: rgba(248,249,255,0.82);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.reference-detail-note{
+    font-size: 13px;
+    color: rgba(248,249,255,0.65);
+}
+.reference-detail-link{
+    color: #63ffb0;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 13px;
+}
+.reference-detail-link:hover{
+    text-decoration: underline;
+}
+.weight-calculator label{
+    display:flex;
+    flex-direction:column;
+    gap: 6px;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(248,249,255,0.8);
+}
+.weight-calculator input{
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0,0,0,0.35);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+}
 .pedi-reference{
     background: rgba(255,255,255,0.02);
     border: 1px solid rgba(255,255,255,0.08);
